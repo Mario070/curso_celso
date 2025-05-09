@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Pagamento via PIX</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background-color: #f0f0f0;
+    }
+
+    .pix-container {
+      background-color: #fff;
+      border: 2px solid #00bb44;
+      border-radius: 12px;
+      padding: 20px;
+      width: 350px;
+      margin: auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    .pix-container img {
+      width: 200px;
+      height: 200px;
+      margin-top: 10px;
+    }
+
+    .pix-container p {
+      margin: 8px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="pix-container">
+  <h2>Pagamento via PIX</h2>
+  <p><strong>Nome:</strong> Nome da Instituição</p>
+  <p><strong>Valor:</strong> R$ 150,00</p>
+  <p><strong>Chave PIX:</strong> pix@instituicao.com</p>
+  <p><strong>Escaneie o QR Code abaixo:</strong></p>
+  
+  <img src="https://api.qrserver.com/v1/create-qr-code/?data=PIX:pix@instituicao.com&size=200x200" alt="QR Code PIX">
+
+  <p><small>Copie a chave ou escaneie com o app do seu banco</small></p>
+</div>
+
+</body>
+</html>
