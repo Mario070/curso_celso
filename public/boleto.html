@@ -4,10 +4,20 @@
   <meta charset="UTF-8">
   <title>Boleto Gerado</title>
   <style>
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+39+Extended+Text&display=swap');
+
     body {
       font-family: Arial, sans-serif;
       padding: 30px;
     }
+
+    .libre-barcode-39-extended-text-regular {
+  font-family: "Libre Barcode 39 Extended Text", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+}
+
     .boleto {
       border: 2px dashed #333;
       padding: 20px;
@@ -23,6 +33,7 @@
     <p><strong>Beneficiário:</strong> Nome da Instituição</p>
     <p><strong>Vencimento:</strong> 10 dias após emissão</p>
     <p><strong>Valor:</strong> R$ 200,00</p>
+    <p class="libre-barcode-39-extended-text-regular"> 34191.79001 01043.510047 91020.150008 6 12345678900000</p>
     <p><strong>Data de emissão:</strong> <span id="data_emissao"></span></p>
   </div>
 
