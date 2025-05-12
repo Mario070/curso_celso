@@ -19,7 +19,7 @@ document.getElementById('btnLogin').addEventListener('click', () => {
         if (data.tipo === 'admin') {
             window.location.href = 'administrador.html';
         } else if (data.tipo === 'aluno') {
-            window.location.href = 'aluno.html';
+            window.location.href = 'tela_usuario.html';
         }else if (data.tipo === 'professor'){
             window.location.href= 'professor.html'
         } else {

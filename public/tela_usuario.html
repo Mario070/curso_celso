@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Css/window_user.css">
+    <link rel="stylesheet" href="Css/style.css">
+    <script src="javascript/painel.js"></script>
+    <link rel="icon" href="../IMG/iconP.jpg" type="image/png">
+    <title>Minerva's Academy</title>
+
+    
+</head>
+
+<body class="organizacao-geral">
+    <div class="top-bar">
+        <h1>Minerva's Academy</h1>
+        <div class="user-menu">
+            <div class="user-avatar" onclick="toggleMenu()">MM</div>
+            <div id="dropdownMenu" class="dropdown-menu">
+                <div class="dropdown-item">Dashboard</div>
+                <div class="dropdown-item">Meus Cursos</div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-item">Configurações</div>
+                <div class="dropdown-item">Perfil</div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-item" onclick="logout()">Sair</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="menu-lateral">
+        <hr>
+        <button onclick="mostrarSecao('seus-cursos')">Seus cursos</button>
+        <hr>
+        <button onclick="mostrarSecao('cursos')">Cursos</button>
+        <hr>
+        <button onclick="mostrarSecao('atividades')">Atividades</button>
+        <hr>
+    </div>
+    
+    <div class="conteudo">
+        <div id="seus-cursos" class="secao">
+            <h1>Seus Cursos</h1>
+            <p>Aqui estão os cursos nos quais você está matriculado.</p>
+        </div>
+        
+        <div id="cursos" class="secao" hidden>
+            <h1>Todos os Cursos Disponíveis</h1>
+            <p>Explore nossa seleção de cursos.</p>
+        </div>
+        
+        <div id="atividades" class="secao" hidden>
+            <h1>Atividade e Progresso</h1>
+            <p>Acompanhe seu desempenho nos cursos.</p>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 Minerva's Academy. Todos os direitos reservados.</p>
+    </footer>
+
+
+</body>
+</html>
