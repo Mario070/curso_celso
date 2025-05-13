@@ -1,15 +1,5 @@
-const express = require('express');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
-const app = express();
-const cors = require('cors');
-
-app.use(cors({ origin: '*' })); // Permite requisições de qualquer origem
-
-app.use(express.json());
-app.use(express.static('public')); 
-app.use(express.static('public'));
-
 
 
 async function inserirPlanos() {
