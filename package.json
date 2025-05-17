@@ -10,8 +10,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@prisma/client": "^6.7.0",
-    "prisma": "^6.7.0"
+    "@prisma/client": "^6.8.2",
+    "prisma": "^6.8.2"
   },
   "dependencies": {
     "cors": "^2.8.5",

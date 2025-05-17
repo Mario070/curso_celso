@@ -7,16 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model alunoturma {
-  alunoId Int
-  turmaId Int
-  usuario usuario @relation(fields: [alunoId], references: [id], map: "AlunoTurma_alunoId_fkey")
-  turma   turma   @relation(fields: [turmaId], references: [id], map: "AlunoTurma_turmaId_fkey")
-
-  @@id([alunoId, turmaId])
-  @@index([turmaId], map: "AlunoTurma_turmaId_fkey")
-}
-
 model apostila {
   id                Int                 @id @default(autoincrement())
   moduloId          Int
@@ -40,13 +30,15 @@ model avaliacao {
 }
 
 model curso {
-  id           Int      @id @default(autoincrement())
-  titulo       String   @db.VarChar(100)
-  descricao    String?
-  categoria    String   @db.VarChar(50)
-  cargaHoraria Int
-  modulo       modulo[]
-  turma        turma[]
+  id             Int       @id @default(autoincrement())
+  titulo         String    @db.VarChar(100)
+  descricao      String?
+  categoria      String    @db.VarChar(50)
+  cargaHoraria   Int
+  modulo         modulo[]
+
+  professores    usuario[] @relation("CursosMinistrados")
+  alunos         usuario[] @relation("CursosMatriculados")
 }
 
 model formapagamento {
@@ -133,21 +125,6 @@ model progressovideo {
   @@index([videoId], map: "ProgressoVideo_videoId_fkey")
 }
 
-model turma {
-  id          Int          @id @default(autoincrement())
-  nome        String       @db.VarChar(100)
-  cursoId     Int
-  professorId Int
-  dataInicio  DateTime
-  dataFim     DateTime
-  alunoturma  alunoturma[]
-  curso       curso        @relation(fields: [cursoId], references: [id], map: "Turma_cursoId_fkey")
-  usuario     usuario      @relation(fields: [professorId], references: [id], map: "Turma_professorId_fkey")
-
-  @@index([cursoId], map: "Turma_cursoId_fkey")
-  @@index([professorId], map: "Turma_professorId_fkey")
-}
-
 model usuario {
   id                 Int                  @id @default(autoincrement())
   nome               String               @db.VarChar(100)
@@ -157,14 +134,15 @@ model usuario {
   dataCadastro       DateTime             @default(now())
   planoId            Int?
   cpf                String?              @db.VarChar(11)
-  alunoturma         alunoturma[]
   formapagamento     formapagamento[]
   parceria           parceria[]
   progressoapostila  progressoapostila[]
   progressoavaliacao progressoavaliacao[]
   progressovideo     progressovideo[]
-  turma              turma[]
   plano              plano?               @relation(fields: [planoId], references: [id], map: "Usuario_planoId_fkey")
+
+  cursosMinistrados  curso[]              @relation("CursosMinistrados")
+  cursosMatriculados curso[]              @relation("CursosMatriculados")
 
   @@index([planoId], map: "Usuario_planoId_fkey")
 }
