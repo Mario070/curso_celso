@@ -1,0 +1,159 @@
+
+
+/* Container principal */
+.cursos-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 20px auto;
+  gap: 20px;
+}
+
+/* Card de curso */
+.curso-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: calc(25% - 20px); /* 4 cards por linha */
+  min-width: 300px;
+  transition: transform 0.3s ease;
+}
+
+.curso-card:hover {
+  transform: scale(1.02);
+}
+
+.curso-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.curso-card h3 {
+  font-size: 18px;
+  margin: 10px;
+  font-weight: bold;
+}
+
+.curso-card p {
+  font-size: 14px;
+  margin-left: 10px;
+  color: #666;
+}
+
+/* Barra de progresso */
+.progress-bar {
+  background-color: #eaeaea;
+  height: 8px;
+  border-radius: 4px;
+  margin: 10px;
+}
+
+.progress {
+  display: inline-block;
+  background-color: #007bff;
+  color: #fff;
+  text-align: center;
+  line-height: 8px;
+  padding: 0 5px;
+  border-radius: 4px;
+}
+
+/* Ações (botões) */
+.actions {
+  text-align: center;
+  margin: 10px;
+}
+
+.actions button {
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.actions button:hover {
+  background-color: #0056b3;
+}
+
+
+
+/* Responsividade */
+@media (max-width: 992px) {
+  .curso-card {
+    width: calc(50% - 20px); /* 2 cards por linha */
+  }
+}
+
+@media (max-width: 768px) {
+  .curso-card {
+    width: 100%; /* 1 card por linha */
+  }
+}
+/* Estilos básicos */
+    .conteudo {
+      padding: 20px;
+    }
+
+    .secao {
+      display: none; /* Inicialmente ocultas */
+    }
+
+    .secao.ativa {
+      display: block; /* Exibe apenas a seção ativa */
+    }
+
+    .cursos-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .curso-card {
+      border: 1px solid #ccc;
+      padding: 10px;
+      width: 300px;
+      text-align: center;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 20px;
+      background-color: #ddd;
+      overflow: hidden;
+    }
+
+    .progress-bar span {
+      display: block;
+      height: 100%;
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      line-height: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1976D2;
+    }
+
+    #cursoDetalhes {
+      text-align: center;
+    }
+
+    #cursoVideo {
+      margin-bottom: 10px;
+    }
