@@ -1,0 +1,309 @@
+       /* Estilos gerais */
+       * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+        background-color: #f5f5f5;
+        color: #333;
+        line-height: 1.6;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    /* Top Bar */
+    .top-bar {
+        background-color: #2c3e50;
+        color: white;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .top-bar h1 {
+        font-size: 1.5rem;
+    }
+
+    /* User Menu */
+    .user-menu {
+        position: relative;
+    }
+
+    .user-avatar {
+        background-color: #3498db;
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        right: 0;
+        top: 50px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        width: 200px;
+        z-index: 100;
+        display: none;
+    }
+
+    .dropdown-item {
+        padding: 0.8rem 1rem;
+        cursor: pointer;
+        color: #333;
+    }
+
+    .dropdown-item:hover {
+        background-color: #f0f0f0;
+    }
+
+    .dropdown-divider {
+        height: 1px;
+        background-color: #eee;
+        margin: 0.3rem 0;
+    }
+
+    /* Layout Principal */
+    .organizacao-geral {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .conteudo-principal {
+        display: flex;
+        flex: 1;
+    }
+
+    /* Menu Lateral */
+    .menu-lateral {
+        width: 250px;
+        background-color: #34495e;
+        color: white;
+        padding: 1.5rem 0;
+    }
+
+    .menu-lateral button {
+        background: none;
+        border: none;
+        color: white;
+        width: 100%;
+        text-align: left;
+        padding: 0.8rem 1.5rem;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s;
+    }
+
+    .menu-lateral button:hover {
+        background-color: #2c3e50;
+    }
+
+    .menu-lateral hr {
+        border: none;
+        border-top: 1px solid #3d5166;
+        margin: 0.3rem 0;
+    }
+
+    /* Conteúdo */
+    .conteudo {
+        flex: 1;
+        padding: 2rem;
+        background-color: #f9f9f9;
+    }
+
+    .secao {
+        display: none;
+    }
+
+    .secao.ativa {
+        display: block;
+    }
+
+    /* Estilos do Fórum */
+    .forum-header {
+        background-color: #2c3e50;
+        color: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+    }
+
+    .forum-header h1 {
+        margin-bottom: 0.5rem;
+    }
+
+    .forum-categories {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .category {
+        background-color: white;
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        transition: transform 0.3s;
+        cursor: pointer;
+    }
+
+    .category:hover {
+        transform: translateY(-5px);
+    }
+
+    .category h2 {
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
+    }
+
+    .category p {
+        color: #7f8c8d;
+        margin-bottom: 1rem;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        line-height: 1.4;
+        max-height: 2.8em;
+    }
+
+    .topic-count {
+        display: inline-block;
+        background-color: #3498db;
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+    }
+
+    .forum-topics {
+        margin-top: 2rem;
+    }
+
+    .topic {
+        background-color: white;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .topic h2 {
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+    }
+
+    .topic-meta {
+        display: flex;
+        gap: 1rem;
+        font-size: 0.8rem;
+        color: #7f8c8d;
+        margin-bottom: 1rem;
+    }
+
+    .btn-reply {
+        display: inline-block;
+        background-color: #3498db;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: background-color 0.3s;
+    }
+
+    .btn-reply:hover {
+        background-color: #2980b9;
+    }
+
+    .new-topic-form {
+        background-color: white;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-top: 2rem;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+        font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+
+    .btn-submit {
+        background-color: #27ae60;
+        color: white;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn-submit:hover {
+        background-color: #219653;
+    }
+
+    /* Rodapé */
+    footer {
+        background-color: #2c3e50;
+        color: white;
+        text-align: center;
+        padding: 1.5rem;
+        margin-top: auto;
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+        .conteudo-principal {
+            flex-direction: column;
+        }
+        
+        .menu-lateral {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 0.5rem 0;
+        }
+        
+        .menu-lateral button {
+            padding: 0.5rem;
+            text-align: center;
+        }
+        
+        .menu-lateral hr {
+            display: none;
+        }
+    }

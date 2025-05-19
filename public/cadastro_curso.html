@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/cadastro_curso.css">
+    <title>Sistema de Cadastro de Cursos</title>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>Sistema de Cadastro de Cursos</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Área de Login -->
+        <div id="secaoLogin" class="secao-login">
+            <h2>Acesso do Administrador</h2>
+            <form id="formularioLogin">
+                <div class="grupo-formulario">
+                    <label for="usuario">Usuário:</label>
+                    <input type="text" id="usuario" required>
+                </div>
+                <div class="grupo-formulario">
+                    <label for="senha">Senha:</label>
+                    <input type="password" id="senha" required>
+                </div>
+                <button type="submit">Entrar</button>
+                <p id="erroLogin" class="erro" style="display: none; margin-top: 10px;">Credenciais inválidas. Tente
+                    novamente.</p>
+            </form>
+        </div>
+
+        <!-- Painel do Administrador -->
+        <div id="painelAdmin" class="painel-admin">
+            <button id="botaoSair" class="botao-sair">Sair</button>
+            <h2>Cadastro de Curso</h2>
+
+            <div id="mensagemSucesso" class="mensagem-sucesso"></div>
+
+            <!-- Lista de Cursos -->
+            <table id="tabelaCursos">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Categoria</th>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Carga Horária</th>
+                        <th>Apostilas</th>
+                        <th>Avaliações</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="corpoTabelaCursos">
+                    <!-- Dados dos cursos serão inseridos aqui via JavaScript -->
+                </tbody>
+            </table>
+
+            <!-- Formulário de Adição/Edição -->
+            <div class="formulario-adicionar-curso">
+                <h3 id="tituloFormulario">Adicionar Novo Curso</h3>
+                <form id="formularioCurso" enctype="multipart/form-data">
+                    <div class="linha-formulario">
+                        <div class="campo-formulario">
+                            <label for="categoriacurso">Categoria:</label>
+                            <input type="text" id="categoriacurso" required>
+                        </div>
+                        <div class="campo-formulario">
+                            <label for="nomecurso">Nome do curso:</label>
+                            <input type="text" id="nomecurso" required>
+                        </div>
+                    </div>
+
+                    <div class="linha-formulario">
+                        <div class="campo-formulario">
+                            <label for="descricao_curso">Descrição:</label>
+                            <textarea id="descricao_curso" rows="3" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Seção de Vídeos -->
+                    <div class="secao-recurso">
+                        <h4>Vídeos do Curso</h4>
+                        <div class="grupo-recurso">
+                            <label for="linkvideo">Link do vídeo:</label>
+                            <div class="controle-recurso">
+                                <input type="text" id="linkvideo" placeholder="https://...">
+                                <label for="tempoVideo">Duração:</label>
+                                <input type="time" id="tempoVideo" step="1">
+                                <button type="button" class="botao-adicionar" onclick="adicionarVideo()">Adicionar
+                                    Vídeo</button>
+                            </div>
+                        </div>
+                        <table class="tabela-recursos">
+                            <thead>
+                                <tr>
+                                    <th>Link</th>
+                                    <th>Duração</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaVideos">
+                                <!-- Vídeos serão adicionados aqui -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Seção de Apostilas -->
+                    <div class="secao-recurso">
+                        <h4>Apostilas do Curso</h4>
+                        <div class="grupo-recurso">
+                            <label for="arquivoApostila">Arquivo:</label>
+                            <div class="controle-recurso">
+                                <input type="file" id="arquivoApostila" accept=".pdf,.doc,.docx,.ppt,.pptx">
+                                <label for="nomeApostila">Nome da apostila:</label>
+                                <input type="text" id="nomeApostila" placeholder="Nome para exibição">
+                                <button type="button" class="botao-adicionar" onclick="adicionarApostila()">Adicionar
+                                    Apostila</button>
+                            </div>
+                        </div>
+                        <table class="tabela-recursos">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Arquivo</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaApostilas">
+                                <!-- Apostilas serão adicionadas aqui -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Seção de Avaliações -->
+                    <div class="secao-recurso">
+                        <h4>Avaliações do Curso</h4>
+                        <div class="grupo-recurso">
+                            <label for="tituloAvaliacao">Título:</label>
+                            <div class="controle-recurso">
+                                <input type="text" id="tituloAvaliacao" placeholder="Título da avaliação">
+                                <label for="linkAvaliacao">Link:</label>
+                                <input type="url" id="linkAvaliacao" placeholder="https://...">
+                                <button type="button" class="botao-adicionar" onclick="adicionarAvaliacao()">Adicionar
+                                    Avaliação</button>
+                            </div>
+                        </div>
+                        <table class="tabela-recursos">
+                            <thead>
+                                <tr>
+                                    <th>Título</th>
+                                    <th>Link</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaAvaliacoes">
+                                <!-- Avaliações serão adicionadas aqui -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="botoes-acao">
+                        <button type="submit" class="botao-salvar">Salvar Curso</button>
+                        <button type="button" id="botaoCancelar" class="botao-cancelar" style="display: none;">Cancelar
+                            Edição</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../JS/cadastro_curso.js"></script>
+</body>
+
+</html>
