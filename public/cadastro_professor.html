@@ -3,8 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../public/Css/cadastro_professor.css">
+    <title>Sistema de Cadastro de Professores</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        .secao-login, .painel-admin {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 20px auto;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 1200px;
+        }
+
+        .painel-admin {
+            display: none;
+        }
+
+        h2, h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .grupo-formulario, .campo-formulario {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .linha-formulario {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .campo-formulario {
+            flex: 1;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .botao-sair {
+            background-color: #e74c3c;
+            float: right;
+        }
+
+        .botao-sair:hover {
+            background-color: #c0392b;
+        }
+
+        .botao-salvar {
+            background-color: #27ae60;
+        }
+
+        .botao-salvar:hover {
+            background-color: #219653;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .acoes-cell {
+            white-space: nowrap;
+        }
+
+        .botao-acao {
+            padding: 5px 10px;
+            margin-right: 5px;
+            font-size: 0.9rem;
+        }
+
+        .botao-editar {
+            background-color: #f39c12;
+        }
+
+        .botao-editar:hover {
+            background-color: #d35400;
+        }
+
+        .botao-excluir {
+            background-color: #e74c3c;
+        }
+
+        .botao-excluir:hover {
+            background-color: #c0392b;
+        }
+
+        .erro {
+            color: #e74c3c;
+            font-weight: 500;
+        }
+
+        .mensagem-sucesso {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .linha-formulario {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            th, td {
+                padding: 8px;
+                font-size: 0.9rem;
+            }
+
+            .acoes-cell {
+                white-space: normal;
+            }
+
+            .botao-acao {
+                margin-bottom: 5px;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -12,7 +203,7 @@
             <h1>Sistema de Cadastro de Professores</h1>
         </div>
     </header>
-    
+
     <div class="container">
         <!-- Área de Login -->
         <div id="secaoLogin" class="secao-login">
@@ -30,48 +221,59 @@
                 <p id="erroLogin" class="erro" style="display: none; margin-top: 10px;">Credenciais inválidas. Tente novamente.</p>
             </form>
         </div>
-        
+
         <!-- Painel do Administrador -->
         <div id="painelAdmin" class="painel-admin">
             <button id="botaoSair" class="botao-sair">Sair</button>
             <h2>Cadastro de Professores</h2>
-            
+
             <div id="mensagemSucesso" class="mensagem-sucesso"></div>
-            
+
             <table id="tabelaProfessores">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Nome</th>
+                        <th>Sobrenome</th>
                         <th>Email</th>
                         <th>Telefone</th>
+                        <th>CPF</th>
                         <th>Disciplina</th>
                         <th>Formação</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody id="corpoTabelaProfessores">
-                    <!-- Dados dos professores serão inseridos aqui via JavaScript -->
-                </tbody>
+                <tbody id="corpoTabelaProfessores"></tbody>
             </table>
-            
+
             <div class="formulario-adicionar-professor">
                 <h3>Adicionar Novo Professor</h3>
                 <form id="formularioProfessor">
+                    <input type="hidden" id="professorId">
                     <div class="linha-formulario">
                         <div class="campo-formulario">
-                            <label for="nomeProfessor">Nome Completo:</label>
+                            <label for="nomeProfessor">Nome:</label>
                             <input type="text" id="nomeProfessor" required>
                         </div>
                         <div class="campo-formulario">
-                            <label for="emailProfessor">Email:</label>
-                            <input type="email" id="emailProfessor" required>
+                            <label for="sobrenomeProfessor">Sobrenome:</label>
+                            <input type="text" id="sobrenomeProfessor" required>
                         </div>
                     </div>
                     <div class="linha-formulario">
                         <div class="campo-formulario">
+                            <label for="emailProfessor">Email:</label>
+                            <input type="email" id="emailProfessor" required>
+                        </div>
+                        <div class="campo-formulario">
                             <label for="telefoneProfessor">Telefone:</label>
                             <input type="tel" id="telefoneProfessor" required>
+                        </div>
+                    </div>
+                    <div class="linha-formulario">
+                        <div class="campo-formulario">
+                            <label for="cpfProfessor">CPF:</label>
+                            <input type="text" id="cpfProfessor" required>
                         </div>
                         <div class="campo-formulario">
                             <label for="disciplinaProfessor">Disciplina:</label>
@@ -92,11 +294,166 @@
                     </div>
                     <div class="botoes-acao">
                         <button type="submit" class="botao-salvar">Salvar Professor</button>
+                        <button type="button" id="botaoCancelar" class="botao-sair" style="display: none;">Cancelar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <script src="../public/javascript/cadastro_professor.js"></script>
+
+    <script>
+        let professores = [];
+
+        const ADMIN_USER = "admin";
+        const ADMIN_PASS = "admin123";
+
+        let editandoProfessor = false;
+        let professorEditandoId = null;
+
+        const secaoLogin = document.getElementById('secaoLogin');
+        const painelAdmin = document.getElementById('painelAdmin');
+        const formularioLogin = document.getElementById('formularioLogin');
+        const formularioProfessor = document.getElementById('formularioProfessor');
+        const corpoTabelaProfessores = document.getElementById('corpoTabelaProfessores');
+        const mensagemSucesso = document.getElementById('mensagemSucesso');
+        const erroLogin = document.getElementById('erroLogin');
+        const botaoSair = document.getElementById('botaoSair');
+        const botaoCancelar = document.getElementById('botaoCancelar');
+
+        formularioLogin.addEventListener('submit', fazerLogin);
+        formularioProfessor.addEventListener('submit', salvarProfessor);
+        botaoSair.addEventListener('click', fazerLogout);
+        botaoCancelar.addEventListener('click', cancelarEdicao);
+
+        function carregarProfessores() {
+            corpoTabelaProfessores.innerHTML = '';
+            professores.forEach(professor => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${professor.id}</td>
+                    <td>${professor.nome}</td>
+                    <td>${professor.sobrenome}</td>
+                    <td>${professor.email}</td>
+                    <td>${professor.telefone}</td>
+                    <td>${professor.cpf}</td>
+                    <td>${professor.disciplina}</td>
+                    <td>${professor.formacao}</td>
+                    <td class="acoes-cell">
+                        <button class="botao-acao botao-editar" data-id="${professor.id}">Editar</button>
+                        <button class="botao-acao botao-excluir" data-id="${professor.id}">Excluir</button>
+                    </td>
+                `;
+                corpoTabelaProfessores.appendChild(tr);
+            });
+
+            document.querySelectorAll('.botao-editar').forEach(botao => {
+                botao.addEventListener('click', editarProfessor);
+            });
+            document.querySelectorAll('.botao-excluir').forEach(botao => {
+                botao.addEventListener('click', excluirProfessor);
+            });
+        }
+
+        function fazerLogin(e) {
+            e.preventDefault();
+            const usuario = document.getElementById('usuario').value;
+            const senha = document.getElementById('senha').value;
+            if (usuario === ADMIN_USER && senha === ADMIN_PASS) {
+                secaoLogin.style.display = 'none';
+                painelAdmin.style.display = 'block';
+                erroLogin.style.display = 'none';
+                carregarProfessores();
+            } else {
+                erroLogin.style.display = 'block';
+            }
+        }
+
+        function fazerLogout() {
+            secaoLogin.style.display = 'block';
+            painelAdmin.style.display = 'none';
+            formularioLogin.reset();
+        }
+
+        function salvarProfessor(e) {
+            e.preventDefault();
+
+            const id = document.getElementById('professorId').value;
+            const nome = document.getElementById('nomeProfessor').value;
+            const sobrenome = document.getElementById('sobrenomeProfessor').value;
+            const email = document.getElementById('emailProfessor').value;
+            const telefone = document.getElementById('telefoneProfessor').value;
+            const cpf = document.getElementById('cpfProfessor').value;
+            const disciplina = document.getElementById('disciplinaProfessor').value;
+            const formacao = document.getElementById('formacaoProfessor').value;
+
+            if (editandoProfessor) {
+                const index = professores.findIndex(p => p.id === parseInt(id));
+                if (index !== -1) {
+                    professores[index] = { id: parseInt(id), nome, sobrenome, email, telefone, cpf, disciplina, formacao };
+                    mostrarMensagem('Professor atualizado com sucesso!');
+                }
+            } else {
+                const novoId = professores.length > 0 ? Math.max(...professores.map(p => p.id)) + 1 : 1;
+                professores.push({ id: novoId, nome, sobrenome, email, telefone, cpf, disciplina, formacao });
+                mostrarMensagem('Professor adicionado com sucesso!');
+            }
+
+            formularioProfessor.reset();
+            document.getElementById('professorId').value = '';
+            carregarProfessores();
+            editandoProfessor = false;
+            professorEditandoId = null;
+            botaoCancelar.style.display = 'none';
+        }
+
+        function editarProfessor(e) {
+            const id = parseInt(e.target.getAttribute('data-id'));
+            const professor = professores.find(p => p.id === id);
+
+            if (professor) {
+                document.getElementById('professorId').value = professor.id;
+                document.getElementById('nomeProfessor').value = professor.nome;
+                document.getElementById('sobrenomeProfessor').value = professor.sobrenome;
+                document.getElementById('emailProfessor').value = professor.email;
+                document.getElementById('telefoneProfessor').value = professor.telefone;
+                document.getElementById('cpfProfessor').value = professor.cpf;
+                document.getElementById('disciplinaProfessor').value = professor.disciplina;
+                document.getElementById('formacaoProfessor').value = professor.formacao;
+
+                editandoProfessor = true;
+                professorEditandoId = id;
+                botaoCancelar.style.display = 'inline-block';
+
+                document.querySelector('.formulario-adicionar-professor').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function excluirProfessor(e) {
+            if (confirm('Tem certeza que deseja excluir este professor?')) {
+                const id = parseInt(e.target.getAttribute('data-id'));
+                professores = professores.filter(p => p.id !== id);
+                carregarProfessores();
+                mostrarMensagem('Professor excluído com sucesso!');
+
+                if (editandoProfessor && professorEditandoId === id) {
+                    cancelarEdicao();
+                }
+            }
+        }
+
+        function cancelarEdicao() {
+            formularioProfessor.reset();
+            document.getElementById('professorId').value = '';
+            editandoProfessor = false;
+            professorEditandoId = null;
+            botaoCancelar.style.display = 'none';
+        }
+
+        function mostrarMensagem(mensagem) {
+            mensagemSucesso.textContent = mensagem;
+            mensagemSucesso.style.display = 'block';
+            setTimeout(() => mensagemSucesso.style.display = 'none', 3000);
+        }
+    </script>
 </body>
 </html>

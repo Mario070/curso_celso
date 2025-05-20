@@ -4,17 +4,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- IMG -->
-    <link rel="icon" href="../public/IMG/iconP.jpg" type="image/png">
+    <link rel="icon" href="../IMG/iconP.jpg" type="image/png">
+    <link rel="stylesheet" href="../public/Css/cadastro_curso.css">
     <!--css-->
     <link rel="stylesheet" href="../public/Css/window_user.css">
     <link rel="stylesheet" href="../public/Css/style.css">
     <link rel="stylesheet" href="../public/Css/meus_cursos.css">
-    <!--js-->
+    <link rel="stylesheet" href="../public/Css/tela_usuario_cursos.css">
+    <style>
+        /* Estilos gerais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 100%;
+            position: relative;
+            z-index: 10;
+        }
+
+        .top-bar h1 {
+            font-size: 1.5rem;
+        }
+
+        /* User Menu */
+        .user-menu {
+            position: relative;
+        }
+
+        .user-avatar {
+            background-color: #3498db;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            right: 0;
+            top: 50px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 200px;
+            z-index: 100;
+            display: none;
+        }
+
+        .dropdown-item {
+            padding: 0.8rem 1rem;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background-color: #eee;
+            margin: 0.3rem 0;
+        }
+
+        /* Layout Principal */
+        .organizacao-geral {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .conteudo-principal {
+            display: flex;
+            flex: 1;
+            width: 100%;
+        }
+
+        /* Menu Lateral */
+        .menu-lateral {
+            width: 250px;
+            background-color: #34495e;
+            color: white;
+            padding: 1.5rem 0;
+            flex-shrink: 0;
+            height: calc(100vh - 60px); /* Altura total menos a altura da top-bar */
+            position: sticky;
+            top: 60px; /* Altura da top-bar */
+            overflow-y: auto;
+        }
+
+        .menu-lateral button {
+            background: none;
+            border: none;
+            color: white;
+            width: 100%;
+            text-align: left;
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .menu-lateral button:hover {
+            background-color: #2c3e50;
+        }
+
+        .menu-lateral hr {
+            border: none;
+            border-top: 1px solid #3d5166;
+            margin: 0.3rem 0;
+        }
+
+        /* Conteúdo principal */
+        .conteudo {
+            flex: 1;
+            padding: 2rem;
+            background-color: #f9f9f9;
+            min-height: calc(100vh - 60px); /* Altura total menos a altura da top-bar */
+            overflow-y: auto;
+        }
+
+        /* Seções dentro da área de conteúdo */
+        .secao {
+            display: none;
+        }
+
+        .secao.ativa {
+            display: block;
+        }
+
+        /* Estilos do Fórum */
+        .forum-header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .forum-header h1 {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Rodapé */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .conteudo-principal {
+                flex-direction: column;
+            }
+            
+            .menu-lateral {
+                width: 100%;
+                height: auto;
+                position: relative;
+                top: 0;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-around;
+                padding: 0.5rem 0;
+            }
+            
+            .menu-lateral button {
+                padding: 0.5rem;
+                text-align: center;
+            }
+            
+            .menu-lateral hr {
+                display: none;
+            }
+
+            .conteudo {
+                padding: 1rem;
+                min-height: auto;
+            }
+        }
+    </style>
     <script src="../public/javascript/forum_professor.js"></script>
     <script src="../public/javascript/meus_cursos.js"></script>
     <title>Minerva's Academy</title>
-
 </head>
 
 <body class="organizacao-geral">
@@ -34,58 +237,20 @@
         </div>
     </div>
 
-    <div class="menu-lateral">
-        <hr>
-        <button onclick="mostrarSecao('seus-cursos')">Seus cursos</button>
-        <hr>
-        <button onclick="mostrarSecao('cursos')">Cursos</button>
-        <hr>
-
-    </div>
-
-    <div class="conteudo">
-
-        <!-- Seção: Seus Cursos auluno -->
-        <div id="seus-cursos" class="secao">
-            <h1>Seus Cursos</h1>
-            <p>Aqui estão os cursos nos quais você está matriculado.</p>
-            <!-- COMO VAI FICA OS CARDS DE CURSOS -->
-            <!-- Curso 1 -->
-            <div class="curso-card">
-                <img src="../public/IMG/002.jpg" alt="Curso de Python">
-                <h3>Curso de Python</h3>
-                <p>Maria</p>
-
-                <div class="progress-bar">
-                    <span class="progress">0%</span>
-                </div>
-
-                <div class="actions">
-                    <!--BACKENTER = QUANDO CLICAR NOS CURSOS TEM TEM LEVA PARA PAGINA DE SEUS CURSOS, SE NECESSARIO,
-                            AQUI E APAGINA DE CURSOS-->
-                    <button onclick="acessarCurso(1)">Acessar curso</button>
-                </div>
-            </div>
-
-            
-
-            <!-- Div para exbir o video do curso (fora do bloco acima) -->
-            <div id="cursoDetalhes" hidden>
-                <iframe id="cursoVideo" width="60%" height="360" frameborder="0" allowfullscreen></iframe>
-                <h2 id="cursoTitulo"></h2>
-                <button onclick="voltarParaCursos()">Voltar</button>
-            </div>
-
+    <div class="conteudo-principal">
+        <div class="menu-lateral">
+            <hr>
+            <button onclick="mostrarSecao('seus-cursos')">Seus cursos</button>
+            <hr>
+            <button onclick="mostrarSecao('cursos')">Cursos</button>
+            <hr>
         </div>
 
-        <!-- Seção: Todos os Cursos -->
-        <div id="cursos" class="secao" hidden>
-            <h1>Cursos Disponíveis</h1>
-            <p>Explore nossa seleção de cursos.</p>
-
-            <!-- Container com todos os cards de cursos -->
-            <div class="cursos-container">
-
+        <div class="conteudo">
+            <!-- Seção: Seus Cursos auluno -->
+            <div id="seus-cursos" class="secao">
+                <h1>Seus Cursos</h1>
+                <p>Aqui estão os cursos nos quais você está matriculado.</p>
                 <!-- COMO VAI FICA OS CARDS DE CURSOS -->
                 <!-- Curso 1 -->
                 <div class="curso-card">
@@ -99,53 +264,78 @@
 
                     <div class="actions">
                         <!--BACKENTER = QUANDO CLICAR NOS CURSOS TEM TEM LEVA PARA PAGINA DE SEUS CURSOS, SE NECESSARIO,
-                            AQUI E APAGINA DE CURSOS-->
+                                AQUI E APAGINA DE CURSOS-->
                         <button onclick="acessarCurso(1)">Acessar curso</button>
                     </div>
                 </div>
 
-                <!-- Curso 2 -->
-                <div class="curso-card">
-                    <!-- Adicione a imagem do curso aqui -->
-                    <img src="../public/IMG/003.webp" alt="Curso de JavaScript">
-                    <h3>nome do curso</h3>
-                    <p>Nome do Professor</p>
-
-                    <div class="progress-bar">
-                        <span class="progress">0%</span>
-                    </div>
-
-                    <div class="actions">
-                        <!--BACKENTER = QUANDO CLICAR NOS CURSOS TEM TEM LEVA PARA PAGINA DE SEUS CURSOS, SE NECESSARIO,
-                            AQUI E APAGINA DE CURSOS-->
-                        <button onclick="acessarCurso(2)">Acessar curso</button>
-                    </div>
+                <!-- Div para exbir o video do curso (fora do bloco acima) -->
+                <div id="cursoDetalhes" hidden>
+                    <iframe id="cursoVideo" width="60%" height="360" frameborder="0" allowfullscreen></iframe>
+                    <h2 id="cursoTitulo"></h2>
+                    <button onclick="voltarParaCursos()">Voltar</button>
                 </div>
-
-                <!-- Curso 3 -->
-                <div class="curso-card">
-                    <!-- Adicione a imagem do curso aqui -->
-                    <img src="../public/IMG/003.webp" alt="Curso de JavaScript">
-                    <h3>nome do curso</h3>
-                    <p>Nome do Professor</p>
-
-                    <div class="progress-bar">
-                        <span class="progress">0%</span>
-                    </div>
-
-                    <div class="actions">
-                        <!--BACKENTER = QUANDO CLICAR NOS CURSOS TEM TEM LEVA PARA PAGINA DE SEUS CURSOS, SE NECESSARIO,
-                            AQUI E APAGINA DE CURSOS-->
-                        <button onclick="acessarCurso(3)">Acessar curso</button>
-                    </div>
-                </div>
-
             </div>
-        </div>
 
-        <div id="atividades" class="secao" hidden>
-            <h1>Atividade e Progresso</h1>
-            <p>Acompanhe seu desempenho nos cursos.</p>
+            <!-- Seção: Todos os Cursos -->
+            <div id="cursos" class="secao" hidden>
+                <h1>Cursos Disponíveis</h1>
+                <p>Explore nossa seleção de cursos.</p>
+
+                <!-- Container com todos os cards de cursos -->
+                <div class="cursos-container">
+                    <!-- COMO VAI FICA OS CARDS DE CURSOS -->
+                    <!-- Curso 1 -->
+                    <div class="curso-card">
+                        <img src="../public/IMG/002.jpg" alt="Curso de Python">
+                        <h3>Curso de Python</h3>
+                        <p>Maria</p>
+
+                        <div class="progress-bar">
+                            <span class="progress">0%</span>
+                        </div>
+
+                        <div class="actions">
+                            <button onclick="acessarCurso(1)">Acessar curso</button>
+                        </div>
+                    </div>
+
+                    <!-- Curso 2 -->
+                    <div class="curso-card">
+                        <img src="../public/IMG/003.webp" alt="Curso de JavaScript">
+                        <h3>nome do curso</h3>
+                        <p>Nome do Professor</p>
+
+                        <div class="progress-bar">
+                            <span class="progress">0%</span>
+                        </div>
+
+                        <div class="actions">
+                            <button onclick="acessarCurso(2)">Acessar curso</button>
+                        </div>
+                    </div>
+
+                    <!-- Curso 3 -->
+                    <div class="curso-card">
+                        <img src="../public/IMG/003.webp" alt="Curso de JavaScript">
+                        <h3>nome do curso</h3>
+                        <p>Nome do Professor</p>
+
+                        <div class="progress-bar">
+                            <span class="progress">0%</span>
+                        </div>
+
+                        <div class="actions">
+                            <button onclick="acessarCurso(3)">Acessar curso</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="atividades" class="secao" hidden>
+                <h1>Atividade e Progresso</h1>
+                <p>Acompanhe seu desempenho nos cursos.</p>
+            </div>
         </div>
     </div>
 
@@ -153,8 +343,59 @@
         <p>&copy; 2025 Minerva's Academy. Todos os direitos reservados.</p>
     </footer>
 
-    <link rel="stylesheet" href="../public/javascript/meu_curso.js">
+    <script>
+        // Dados do fórum
+        const forumData = {
+            categories: [
+                { id: 1, name: "Planejamento de Aulas", description: "Discuta estratégias e métodos de ensino" },
+                { id: 2, name: "Recursos Didáticos", description: "Compartilhe materiais e ferramentas úteis" },
+                { id: 3, name: "Dúvidas Técnicas", description: "Tire dúvidas sobre a plataforma" }
+            ],
+            topics: []
+        };
 
+        // Função para mostrar seções
+        function mostrarSecao(secaoId) {
+            // Esconde todas as seções
+            document.querySelectorAll('.secao').forEach(secao => {
+                secao.classList.remove('ativa');
+                secao.hidden = true;
+            });
+            
+            // Mostra a seção selecionada
+            const secaoAtiva = document.getElementById(secaoId);
+            secaoAtiva.classList.add('ativa');
+            secaoAtiva.hidden = false;
+        }
+        
+        // Função para alternar o menu do usuário
+        function toggleMenu() {
+            const menu = document.getElementById('dropdownMenu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+        
+        // Fechar menu quando clicar fora
+        window.onclick = function(event) {
+            if (!event.target.matches('.user-avatar')) {
+                const dropdowns = document.getElementsByClassName('dropdown-menu');
+                for (let i = 0; i < dropdowns.length; i++) {
+                    const openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === 'block') {
+                        openDropdown.style.display = 'none';
+                    }
+                }
+            }
+        }
+        
+        // Função de logout (exemplo)
+        function logout() {
+            alert('Você foi desconectado');
+        }
+        
+        // Mostrar a seção inicial ao carregar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            mostrarSecao('seus-cursos');
+        });
+    </script>
 </body>
-
 </html>
