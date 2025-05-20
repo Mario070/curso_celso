@@ -77,7 +77,6 @@ function voltarParaCursos() {
 }
 */
 
-// Dados dos cursos
 const cursos = {
   "1": {
     titulo: "Curso de Python",
@@ -85,7 +84,7 @@ const cursos = {
   },
   "2": {
     titulo: "Curso de JavaScript",
-    youtubeid: "dQw4w9WgXcQ" // Exemplo válido do YouTube
+    youtubeid: "dQw4w9WgXcQ"
   }
 };
 
@@ -94,7 +93,7 @@ function acessarCurso(id) {
   const curso = cursos[id];
 
   // Oculta a lista de cursos
-  document.getElementById("listaDeCursos").hidden = true;
+  document.getElementById("seus-cursos").hidden = true;
 
   // Mostra a seção de detalhes
   const detalhes = document.getElementById("cursoDetalhes");
@@ -111,6 +110,6 @@ function voltarParaCursos() {
   document.getElementById("cursoVideo").src = "";
 
   // Volta para a lista de cursos
-  document.getElementById("listaDeCursos").hidden = false;
   document.getElementById("cursoDetalhes").hidden = true;
+  document.getElementById("cursos").hidden = false;
 }

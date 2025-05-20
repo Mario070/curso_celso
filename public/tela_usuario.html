@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS/window_user.css">
-    <link rel="stylesheet" href="../CSS/style.css">
-    <script src="../JS/painel.js"></script>
-    <link rel="icon" href="../IMG/iconP.jpg" type="image/png">
+    <!-- IMG -->
+    <link rel="icon" href="../public/IMG/iconP.jpg" type="image/png">
+    <!--css-->
+    <link rel="stylesheet" href="../public/Css/window_user.css">
+    <link rel="stylesheet" href="../public/Css/style.css">
+    <link rel="stylesheet" href="../public/Css/meus_cursos.css">
+    <!--js-->
+    <script src="../public/javascript/forum_professor.js"></script>
+    <script src="../public/javascript/meus_cursos.js"></script>
     <title>Minerva's Academy</title>
 
 </head>
@@ -27,7 +33,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="menu-lateral">
         <hr>
         <button onclick="mostrarSecao('seus-cursos')">Seus cursos</button>
@@ -36,28 +42,119 @@
         <hr>
 
     </div>
-    
+
     <div class="conteudo">
+
+        <!-- Seção: Seus Cursos auluno -->
         <div id="seus-cursos" class="secao">
             <h1>Seus Cursos</h1>
             <p>Aqui estão os cursos nos quais você está matriculado.</p>
+            <!-- COMO VAI FICA OS CARDS DE CURSOS -->
+            <!-- Curso 1 -->
+            <div class="curso-card">
+                <img src="../public/IMG/002.jpg" alt="Curso de Python">
+                <h3>Curso de Python</h3>
+                <p>Maria</p>
+
+                <div class="progress-bar">
+                    <span class="progress">0%</span>
+                </div>
+
+                <div class="actions">
+                    <!--BACKENTER = QUANDO CLICAR NOS CURSOS TEM TEM LEVA PARA PAGINA DE SEUS CURSOS, SE NECESSARIO,
+                            AQUI E APAGINA DE CURSOS-->
+                    <button onclick="acessarCurso(1)">Acessar curso</button>
+                </div>
+            </div>
+
+            
+
+            <!-- Div para exbir o video do curso (fora do bloco acima) -->
+            <div id="cursoDetalhes" hidden>
+                <iframe id="cursoVideo" width="60%" height="360" frameborder="0" allowfullscreen></iframe>
+                <h2 id="cursoTitulo"></h2>
+                <button onclick="voltarParaCursos()">Voltar</button>
+            </div>
+
         </div>
-        
+
+        <!-- Seção: Todos os Cursos -->
         <div id="cursos" class="secao" hidden>
-            <h1>Todos os Cursos Disponíveis</h1>
+            <h1>Cursos Disponíveis</h1>
             <p>Explore nossa seleção de cursos.</p>
+
+            <!-- Container com todos os cards de cursos -->
+            <div class="cursos-container">
+
+                <!-- COMO VAI FICA OS CARDS DE CURSOS -->
+                <!-- Curso 1 -->
+                <div class="curso-card">
+                    <img src="../public/IMG/002.jpg" alt="Curso de Python">
+                    <h3>Curso de Python</h3>
+                    <p>Maria</p>
+
+                    <div class="progress-bar">
+                        <span class="progress">0%</span>
+                    </div>
+
+                    <div class="actions">
+                        <!--BACKENTER = QUANDO CLICAR NOS CURSOS TEM TEM LEVA PARA PAGINA DE SEUS CURSOS, SE NECESSARIO,
+                            AQUI E APAGINA DE CURSOS-->
+                        <button onclick="acessarCurso(1)">Acessar curso</button>
+                    </div>
+                </div>
+
+                <!-- Curso 2 -->
+                <div class="curso-card">
+                    <!-- Adicione a imagem do curso aqui -->
+                    <img src="../public/IMG/003.webp" alt="Curso de JavaScript">
+                    <h3>nome do curso</h3>
+                    <p>Nome do Professor</p>
+
+                    <div class="progress-bar">
+                        <span class="progress">0%</span>
+                    </div>
+
+                    <div class="actions">
+                        <!--BACKENTER = QUANDO CLICAR NOS CURSOS TEM TEM LEVA PARA PAGINA DE SEUS CURSOS, SE NECESSARIO,
+                            AQUI E APAGINA DE CURSOS-->
+                        <button onclick="acessarCurso(2)">Acessar curso</button>
+                    </div>
+                </div>
+
+                <!-- Curso 3 -->
+                <div class="curso-card">
+                    <!-- Adicione a imagem do curso aqui -->
+                    <img src="../public/IMG/003.webp" alt="Curso de JavaScript">
+                    <h3>nome do curso</h3>
+                    <p>Nome do Professor</p>
+
+                    <div class="progress-bar">
+                        <span class="progress">0%</span>
+                    </div>
+
+                    <div class="actions">
+                        <!--BACKENTER = QUANDO CLICAR NOS CURSOS TEM TEM LEVA PARA PAGINA DE SEUS CURSOS, SE NECESSARIO,
+                            AQUI E APAGINA DE CURSOS-->
+                        <button onclick="acessarCurso(3)">Acessar curso</button>
+                    </div>
+                </div>
+
+            </div>
         </div>
-        
+
         <div id="atividades" class="secao" hidden>
             <h1>Atividade e Progresso</h1>
             <p>Acompanhe seu desempenho nos cursos.</p>
         </div>
     </div>
-    
+
     <footer>
         <p>&copy; 2025 Minerva's Academy. Todos os direitos reservados.</p>
     </footer>
 
+    <link rel="stylesheet" href="../public/javascript/meu_curso.js">
 
 </body>
+
 </html>

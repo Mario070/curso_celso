@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../IMG/iconP.jpg" type="image/png">
+    <!-- IMG -->
+    <link rel="icon" href="../public/IMG/iconP.jpg" type="image/png">
     <!--css-->
     <link rel="stylesheet" href="../public/Css/forum.css">
     <link rel="stylesheet" href="../public/Css/meus_cursos.css">
@@ -14,7 +15,6 @@
 
     <!-- Título da Página -->
     <title>Minerva's Academy</title>
-
 </head>
 
 <body class="organizacao-geral">
@@ -48,63 +48,128 @@
         </div>
 
         <div class="conteudo">
+            <!-- Seção: Seus Cursos -->
             <div id="seus-cursos" class="secao ativa">
                 <h1>Seus Cursos</h1>
                 <p>Aqui estão os cursos nos quais você está matriculado.</p>
             </div>
 
+            <!-- Seção: Todos os Cursos -->
             <div id="cursos" class="secao" hidden>
-                <h1>Todos os Cursos Disponíveis</h1>
+                <h1>Cursos Disponíveis</h1>
                 <p>Explore nossa seleção de cursos.</p>
 
-                <div id="atividades" class="secao" hidden>
-                    <h1>Atividade e Progresso</h1>
-                    <p>Acompanhe seu desempenho nos cursos.</p>
+                <!-- Container com todos os cards de cursos -->
+                <div class="cursos-container">
+
+                    <!-- COMO VAI FICA OS CARDS DE CURSOS -->    
+                    <!-- Curso 1 -->
+                    <div class="curso-card">
+                        <img src="../public/IMG/002.jpg" alt="Curso de Python">
+                        <h3>Curso de Python</h3>
+                        <p>Maria</p>
+
+                        <div class="progress-bar">
+                            <span class="progress">0%</span>
+                        </div>
+
+                        <div class="actions">
+                            <!--BACKENTER = QUANDO CLICAR NOS CURSOS TEM TEM LEVA PARA PAGINA DE SEUS CURSOS, SE NECESSARIO,
+                            AQUI E APAGINA DE CURSOS-->
+                            <button onclick="acessarCurso(1)">Acessar curso</button>
+                        </div>
+                    </div>
+
+                    <!-- Curso 2 -->
+                    <div class="curso-card">
+                        <!-- Adicione a imagem do curso aqui -->
+                        <img src="../public/IMG/003.webp" alt="Curso de JavaScript">
+                        <h3>Nome do curso</h3>
+                        <p>Nome do Professor</p>
+
+                        <div class="progress-bar">
+                            <span class="progress">0%</span>
+                        </div>
+
+                        <div class="actions">
+                            <!--BACKENTER = QUANDO CLICAR NOS CURSOS TEM TEM LEVA PARA PAGINA DE SEUS CURSOS, SE NECESSARIO,
+                            AQUI E APAGINA DE CURSOS-->
+                            <button onclick="acessarCurso(2)">Acessar curso</button>
+                        </div>
+                    </div>
+
+                    <!-- Curso 3 -->
+                    <div class="curso-card">
+                        <!-- Adicione a imagem do curso aqui -->
+                        <img src="../public/IMG/003.webp" alt="Curso de JavaScript">
+                        <h3>Nome do curso</h3>
+                        <p>Nome do Professor</p>
+
+                        <div class="progress-bar">
+                            <span class="progress">0%</span>
+                        </div>
+
+                        <div class="actions">
+                            <!--BACKENTER = QUANDO CLICAR NOS CURSOS TEM TEM LEVA PARA PAGINA DE SEUS CURSOS, SE NECESSARIO,
+                            AQUI E APAGINA DE CURSOS-->
+                            <button onclick="acessarCurso(3)">Acessar curso</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Seção: Atividades -->
+            <div id="atividades" class="secao" hidden>
+                <h1>Atividade e Progresso</h1>
+                <p>Acompanhe seu desempenho nos cursos.</p>
+            </div>
+
+            <!-- Seção: Fórum de Professores -->
+            <div id="forum" class="secao" hidden>
+                <div class="forum-header">
+                    <h1>Fórum de Professores</h1>
+                    <p>Comunidade de compartilhamento de conhecimento</p>
                 </div>
 
-                <div id="forum" class="secao" hidden>
-                    <div class="forum-header">
-                        <h1>Fórum de Professores</h1>
-                        <p>Comunidade de compartilhamento de conhecimento</p>
-                    </div>
+                <div class="forum-categories" id="categories-container">
+                    <!-- Categorias serão preenchidas via JavaScript -->
+                </div>
 
-                    <div class="forum-categories" id="categories-container">
-                        <!-- Categorias serão preenchidas via JavaScript -->
-                    </div>
+                <div class="forum-topics" id="topics-container">
+                    <!-- Tópicos serão preenchidos via JavaScript -->
+                </div>
 
-                    <div class="forum-topics" id="topics-container">
-                        <!-- Tópicos serão preenchidos via JavaScript -->
-                    </div>
-
-                    <div class="new-topic-form">
-                        <h2>Criar Novo Tópico</h2>
-                        <form id="new-topic-form">
-                            <div class="form-group">
-                                <label for="topic-title">Título</label>
-                                <input type="text" id="topic-title" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="topic-category">Categoria</label>
-                                <select id="topic-category" required>
-                                    <option value="">Selecione uma categoria</option>
-                                    <!-- Opções serão preenchidas via JavaScript -->
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="topic-content">Conteúdo</label>
-                                <textarea id="topic-content" rows="6" required></textarea>
-                            </div>
-                            <button type="submit" class="btn-submit">Publicar Tópico</button>
-                        </form>
-                    </div>
+                <div class="new-topic-form">
+                    <h2>Criar Novo Tópico</h2>
+                    <form id="new-topic-form">
+                        <div class="form-group">
+                            <label for="topic-title">Título</label>
+                            <input type="text" id="topic-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="topic-category">Categoria</label>
+                            <select id="topic-category" required>
+                                <option value="">Selecione uma categoria</option>
+                                <!-- Opções serão preenchidas via JavaScript -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="topic-content">Conteúdo</label>
+                            <textarea id="topic-content" rows="6" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">Publicar Tópico</button>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
 
-        <footer>
-            <p>&copy; 2025 Minerva's Academy. Todos os direitos reservados.</p>
-        </footer>
+    <footer>
+        <p>&copy; 2025 Minerva's Academy. Todos os direitos reservados.</p>
+    </footer>
 
+    
 </body>
 
 </html>
