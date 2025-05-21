@@ -150,6 +150,116 @@ app.post('/api/login', async (req, res) => {
   app.get('/', (req, res) => {
     res.redirect('/login.html');
 });
+
+app.post('/api/salvar-curso', async (req, res) => {
+  const { titulo, descricao, categoria, cargaHoraria } = req.body;
+
+  try {
+    const novoCurso = await prisma.curso.create({
+      data: {
+        titulo,
+        descricao,
+        categoria,
+        cargaHoraria: parseInt(cargaHoraria),
+      },
+    });
+
+    // Retorna o id e a mensagem para o front
+    res.status(200).json({ id: novoCurso.id, message: "Curso salvo com sucesso!" });
+  } catch (error) {
+    console.error("Erro ao salvar curso:", error.message, error.meta);
+    res.status(500).json({ error: "Erro ao salvar o curso no banco de dados." });
+  }
+});
+
+app.post('/api/salvar-video', async (req, res) => {
+  const { titulovideo, linkvideo, tempoVideo, moduloId } = req.body;
+
+  // Converter duração
+  const [hora = "0", minuto = "0", segundo = "0"] = (tempoVideo || "00:00:00").split(':');
+  const duracaoEmMinutos = parseInt(hora) * 60 + parseInt(minuto) + (parseInt(segundo) >= 30 ? 1 : 0);
+
+  try {
+    const novoVideo = await prisma.video.create({
+      data: {
+        moduloId,
+        titulo: titulovideo,
+        urlVideo: linkvideo,
+        duracao: duracaoEmMinutos,
+      },
+    });
+
+    res.status(200).json({ message: "Vídeo salvo com sucesso!" });
+  } catch (error) {
+    console.error("Erro ao salvar vídeo:", error.message, error.meta);
+    res.status(500).json({ error: "Erro ao salvar o vídeo no banco de dados." });
+  }
+});
+
+app.post('/api/salvar-modulo', async (req, res) => {
+  const { cursoId, titulo, ordem } = req.body;
+
+  if (!cursoId || !titulo || ordem === undefined) {
+    return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
+  }
+
+  try {
+    const novoModulo = await prisma.modulo.create({
+      data: {
+        cursoId: parseInt(cursoId),
+        titulo,
+        ordem: parseInt(ordem),
+      },
+    });
+
+    res.status(200).json({ message: 'Módulo salvo com sucesso!', modulo: novoModulo });
+  } catch (error) {
+    console.error('Erro ao salvar módulo:', error);
+    res.status(500).json({ error: 'Erro ao salvar o módulo no banco de dados.' });
+  }
+});
+app.post('/api/salvar-apostila', async (req, res) => {
+  const { moduloId, titulo, arquivoUrl } = req.body;
+
+  if (!moduloId || !titulo || !arquivoUrl) {
+    return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
+  }
+
+  try {
+    const novaApostila = await prisma.apostila.create({
+      data: {
+        moduloId: parseInt(moduloId),
+        titulo,
+        arquivoUrl,
+      },
+    });
+
+    res.status(200).json({ message: 'Apostila salva com sucesso!', apostila: novaApostila });
+  } catch (error) {
+    console.error('Erro ao salvar apostila:', error);
+    res.status(500).json({ error: 'Erro ao salvar a apostila no banco de dados.' });
+  }
+});
+
+app.post('/api/salvar-avaliacao', async (req, res) => {
+  const { moduloId, titulo, url } = req.body;
+
+  try {
+    const novaAvaliacao = await prisma.avaliacao.create({
+      data: {
+        moduloId: parseInt(moduloId),
+        titulo,
+        url,
+      },
+    });
+
+    res.status(200).json({ message: 'Avaliação salva com sucesso!' });
+  } catch (error) {
+    console.error("Erro ao salvar avaliação:", error);
+    res.status(500).json({ error: "Erro ao salvar a avaliação no banco de dados." });
+  }
+});
+
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);

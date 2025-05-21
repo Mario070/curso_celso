@@ -322,16 +322,7 @@ window.excluirCurso = function(id) {
     }
 };
 
-// Função para limpar o formulário
-function limparFormulario() {
-    formularioCurso.reset();
-    videosTemp = [];
-    apostilasTemp = [];
-    avaliacoesTemp = [];
-    renderizarTabelaVideos();
-    renderizarTabelaApostilas();
-    renderizarTabelaAvaliacoes();
-}
+
 
 // Função para exibir mensagem de sucesso
 function mostrarMensagemSucesso(mensagem) {

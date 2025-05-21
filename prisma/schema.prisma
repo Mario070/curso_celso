@@ -22,7 +22,7 @@ model avaliacao {
   id                 Int                  @id @default(autoincrement())
   moduloId           Int
   titulo             String               @db.VarChar(100)
-  descricao          String?
+  url                String               @db.VarChar(255) // era descricao
   modulo             modulo               @relation(fields: [moduloId], references: [id], map: "Avaliacao_moduloId_fkey")
   progressoavaliacao progressoavaliacao[]
 

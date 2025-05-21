@@ -72,9 +72,11 @@
                         <div class="campo-formulario">
                             <label for="nomecurso">Nome do curso:</label>
                             <input type="text" id="nomecurso" required>
+                            <input type="text" id="tituloModulo" placeholder="Título do módulo" required>
+                            
                         </div>
                     </div>
-
+                    
                     <div class="linha-formulario">
                         <div class="campo-formulario">
                             <label for="descricao_curso">Descrição:</label>
@@ -89,10 +91,9 @@
                             <label for="linkvideo">Link do vídeo:</label>
                             <div class="controle-recurso">
                                 <input type="text" id="linkvideo" placeholder="https://...">
+                                 <input type="text" id="titulovideo" placeholder="titulo">
                                 <label for="tempoVideo">Duração:</label>
                                 <input type="time" id="tempoVideo" step="1">
-                                <button type="button" class="botao-adicionar" onclick="adicionarVideo()">Adicionar
-                                    Vídeo</button>
                             </div>
                         </div>
                         <table class="tabela-recursos">
@@ -115,11 +116,9 @@
                         <div class="grupo-recurso">
                             <label for="arquivoApostila">Arquivo:</label>
                             <div class="controle-recurso">
-                                <input type="file" id="arquivoApostila" accept=".pdf,.doc,.docx,.ppt,.pptx">
+                                <input type="text" id="linkapostila" placeholder="https://...">
                                 <label for="nomeApostila">Nome da apostila:</label>
                                 <input type="text" id="nomeApostila" placeholder="Nome para exibição">
-                                <button type="button" class="botao-adicionar" onclick="adicionarApostila()">Adicionar
-                                    Apostila</button>
                             </div>
                         </div>
                         <table class="tabela-recursos">
@@ -145,8 +144,6 @@
                                 <input type="text" id="tituloAvaliacao" placeholder="Título da avaliação">
                                 <label for="linkAvaliacao">Link:</label>
                                 <input type="url" id="linkAvaliacao" placeholder="https://...">
-                                <button type="button" class="botao-adicionar" onclick="adicionarAvaliacao()">Adicionar
-                                    Avaliação</button>
                             </div>
                         </div>
                         <table class="tabela-recursos">
@@ -174,6 +171,7 @@
     </div>
 
     <script src="../public/javascript/cadastro_curso.js"></script>
+    <script src="../public/javascript/script.js"></script>
 </body>
 
 </html>
