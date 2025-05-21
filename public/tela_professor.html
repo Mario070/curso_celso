@@ -4,17 +4,347 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- IMG -->
-    <link rel="icon" href="../public/IMG/iconP.jpg" type="image/png">
-    <!--css-->
-    <link rel="stylesheet" href="../public/Css/forum.css">
-    <link rel="stylesheet" href="../public/Css/meus_cursos.css">
-    <!--js-->
-    <script src="../public/javascript/forum_professor.js"></script>
-    <script src="../public/javascript/meus_cursos.js"></script>
+    <link rel="icon" href="../IMG/iconP.jpg" type="image/png">
+    <link rel="stylesheet" href="../public/Css/cadastro_curso.css">
 
     <!-- Título da Página -->
     <title>Minerva's Academy</title>
+    <style>
+        /* Estilos gerais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .top-bar h1 {
+            font-size: 1.5rem;
+        }
+
+        /* User Menu */
+        .user-menu {
+            position: relative;
+        }
+
+        .user-avatar {
+            background-color: #3498db;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            right: 0;
+            top: 50px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 200px;
+            z-index: 100;
+            display: none;
+        }
+
+        .dropdown-item {
+            padding: 0.8rem 1rem;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background-color: #eee;
+            margin: 0.3rem 0;
+        }
+
+        /* Layout Principal */
+        .organizacao-geral {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .conteudo-principal {
+            display: flex;
+            flex: 1;
+        }
+
+        /* Menu Lateral */
+        .menu-lateral {
+            width: 250px;
+            background-color: #34495e;
+            color: white;
+            padding: 1.5rem 0;
+        }
+
+        .menu-lateral button {
+            background: none;
+            border: none;
+            color: white;
+            width: 100%;
+            text-align: left;
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .menu-lateral button:hover {
+            background-color: #2c3e50;
+        }
+
+        .menu-lateral hr {
+            border: none;
+            border-top: 1px solid #3d5166;
+            margin: 0.3rem 0;
+        }
+
+        /* Conteúdo */
+        .conteudo {
+            flex: 1;
+            padding: 2rem;
+            background-color: #f9f9f9;
+        }
+
+        .secao {
+            display: none;
+        }
+
+        .secao.ativa {
+            display: block;
+        }
+
+        /* Estilos do Fórum */
+        .forum-header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .forum-header h1 {
+            margin-bottom: 0.5rem;
+        }
+
+        .forum-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .category {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .category:hover {
+            transform: translateY(-5px);
+        }
+
+        .category h2 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .category p {
+            color: #7f8c8d;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            line-height: 1.4;
+            max-height: 2.8em;
+        }
+
+        .topic-count {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .forum-topics {
+            margin-top: 2rem;
+        }
+
+        .topic {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .topic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .topic h2 {
+            color: #2c3e50;
+            margin-bottom: 0;
+            font-size: 1.2rem;
+        }
+
+        .category-label {
+            background-color: #3498db;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .topic-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            margin-bottom: 1rem;
+        }
+
+        .topic-content {
+            margin-bottom: 1rem;
+        }
+
+        .btn-reply {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn-reply:hover {
+            background-color: #2980b9;
+        }
+
+        .new-topic-form {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .btn-submit {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #219653;
+        }
+
+        .no-topics {
+            text-align: center;
+            padding: 2rem;
+            color: #7f8c8d;
+        }
+
+        /* Rodapé */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: auto;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .conteudo-principal {
+                flex-direction: column;
+            }
+            
+            .menu-lateral {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-around;
+                padding: 0.5rem 0;
+            }
+            
+            .menu-lateral button {
+                padding: 0.5rem;
+                text-align: center;
+            }
+            
+            .menu-lateral hr {
+                display: none;
+            }
+        }
+    </style>
 </head>
 
 <body class="organizacao-geral">
@@ -37,9 +367,9 @@
     <div class="conteudo-principal">
         <div class="menu-lateral">
             <hr>
-            <button onclick="mostrarSecao('seus-cursos')">Seus cursos</button>
-            <hr>
             <button onclick="mostrarSecao('cursos')">Cursos</button>
+            <hr>
+            <button onclick="mostrarSecao('adicionar_cursos')">Adicionar Cursos</button>
             <hr>
             <button onclick="mostrarSecao('atividades')">Atividades</button>
             <hr>
@@ -48,14 +378,7 @@
         </div>
 
         <div class="conteudo">
-            <!-- Seção: Seus Cursos -->
-            <div id="seus-cursos" class="secao ativa">
-                <h1>Seus Cursos</h1>
-                <p>Aqui estão os cursos nos quais você está matriculado.</p>
-            </div>
-
-            <!-- Seção: Todos os Cursos -->
-            <div id="cursos" class="secao" hidden>
+            <div id="cursos" class="secao ativa">
                 <h1>Cursos Disponíveis</h1>
                 <p>Explore nossa seleção de cursos.</p>
 
@@ -119,13 +442,170 @@
                 </div>
             </div>
 
-            <!-- Seção: Atividades -->
-            <div id="atividades" class="secao" hidden>
-                <h1>Atividade e Progresso</h1>
-                <p>Acompanhe seu desempenho nos cursos.</p>
+            <div id="adicionar_cursos" class="secao" hidden>
+                <div class="container">
+                    <!-- Área de Login -->
+                    <div id="secaoLogin" class="secao-login">
+                        <h2>Acesso do Administrador</h2>
+                        <form id="formularioLogin">
+                            <div class="grupo-formulario">
+                                <label for="usuario">Usuário:</label>
+                                <input type="text" id="usuario" required>
+                            </div>
+                            <div class="grupo-formulario">
+                                <label for="senha">Senha:</label>
+                                <input type="password" id="senha" required>
+                            </div>
+                            <button type="submit">Entrar</button>
+                            <p id="erroLogin" class="erro" style="display: none; margin-top: 10px;">Credenciais inválidas. Tente
+                                novamente.</p>
+                        </form>
+                    </div>
+            
+                    <!-- Painel do Administrador -->
+                    <div id="painelAdmin" class="painel-admin">
+                        <button id="botaoSair" class="botao-sair">Sair</button>
+                        <h2>Cadastro de Curso</h2>
+            
+                        <div id="mensagemSucesso" class="mensagem-sucesso"></div>
+            
+                        <!-- Lista de Cursos -->
+                        <table id="tabelaCursos">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Categoria</th>
+                                    <th>Nome</th>
+                                    <th>Descrição</th>
+                                    <th>Carga Horária</th>
+                                    <th>Apostilas</th>
+                                    <th>Avaliações</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="corpoTabelaCursos">
+                                <!-- Dados dos cursos serão inseridos aqui via JavaScript -->
+                            </tbody>
+                        </table>
+            
+                        <!-- Formulário de Adição/Edição -->
+                        <div class="formulario-adicionar-curso">
+                            <h3 id="tituloFormulario">Adicionar Novo Curso</h3>
+                            <form id="formularioCurso" enctype="multipart/form-data">
+                                <div class="linha-formulario">
+                                    <div class="campo-formulario">
+                                        <label for="categoriacurso">Categoria:</label>
+                                        <input type="text" id="categoriacurso" required>
+                                    </div>
+                                    <div class="campo-formulario">
+                                        <label for="nomecurso">Nome do curso:</label>
+                                        <input type="text" id="nomecurso" required>
+                                    </div>
+                                </div>
+            
+                                <div class="linha-formulario">
+                                    <div class="campo-formulario">
+                                        <label for="descricao_curso">Descrição:</label>
+                                        <textarea id="descricao_curso" rows="3" required></textarea>
+                                    </div>
+                                </div>
+            
+                                <!-- Seção de Vídeos -->
+                                <div class="secao-recurso">
+                                    <h4>Vídeos do Curso</h4>
+                                    <div class="grupo-recurso">
+                                        <label for="linkvideo">Link do vídeo:</label>
+                                        <div class="controle-recurso">
+                                            <input type="text" id="linkvideo" placeholder="https://...">
+                                            <label for="tempoVideo">Duração:</label>
+                                            <input type="time" id="tempoVideo" step="1">
+                                            <button type="button" class="botao-adicionar" onclick="adicionarVideo()">Adicionar
+                                                Vídeo</button>
+                                        </div>
+                                    </div>
+                                    <table class="tabela-recursos">
+                                        <thead>
+                                            <tr>
+                                                <th>Link</th>
+                                                <th>Duração</th>
+                                                <th>Ação</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tabelaVideos">
+                                            <!-- Vídeos serão adicionados aqui -->
+                                        </tbody>
+                                    </table>
+                                </div>
+            
+                                <!-- Seção de Apostilas -->
+                                <div class="secao-recurso">
+                                    <h4>Apostilas do Curso</h4>
+                                    <div class="grupo-recurso">
+                                        <label for="arquivoApostila">Arquivo:</label>
+                                        <div class="controle-recurso">
+                                            <input type="file" id="arquivoApostila" accept=".pdf,.doc,.docx,.ppt,.pptx">
+                                            <label for="nomeApostila">Nome da apostila:</label>
+                                            <input type="text" id="nomeApostila" placeholder="Nome para exibição">
+                                            <button type="button" class="botao-adicionar" onclick="adicionarApostila()">Adicionar
+                                                Apostila</button>
+                                        </div>
+                                    </div>
+                                    <table class="tabela-recursos">
+                                        <thead>
+                                            <tr>
+                                                <th>Nome</th>
+                                                <th>Arquivo</th>
+                                                <th>Ação</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tabelaApostilas">
+                                            <!-- Apostilas serão adicionadas aqui -->
+                                        </tbody>
+                                    </table>
+                                </div>
+            
+                                <!-- Seção de Avaliações -->
+                                <div class="secao-recurso">
+                                    <h4>Avaliações do Curso</h4>
+                                    <div class="grupo-recurso">
+                                        <label for="tituloAvaliacao">Título:</label>
+                                        <div class="controle-recurso">
+                                            <input type="text" id="tituloAvaliacao" placeholder="Título da avaliação">
+                                            <label for="linkAvaliacao">Link:</label>
+                                            <input type="url" id="linkAvaliacao" placeholder="https://...">
+                                            <button type="button" class="botao-adicionar" onclick="adicionarAvaliacao()">Adicionar
+                                                Avaliação</button>
+                                        </div>
+                                    </div>
+                                    <table class="tabela-recursos">
+                                        <thead>
+                                            <tr>
+                                                <th>Título</th>
+                                                <th>Link</th>
+                                                <th>Ação</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tabelaAvaliacoes">
+                                            <!-- Avaliações serão adicionadas aqui -->
+                                        </tbody>
+                                    </table>
+                                </div>
+            
+                                <div class="botoes-acao">
+                                    <button type="submit" class="botao-salvar">Salvar Curso</button>
+                                    <button type="button" id="botaoCancelar" class="botao-cancelar" style="display: none;">Cancelar
+                                        Edição</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Seção: Fórum de Professores -->
+            <div id="atividades" class="secao" hidden>
+
+            </div>
+
             <div id="forum" class="secao" hidden>
                 <div class="forum-header">
                     <h1>Fórum de Professores</h1>
@@ -168,8 +648,194 @@
     <footer>
         <p>&copy; 2025 Minerva's Academy. Todos os direitos reservados.</p>
     </footer>
+    <script src="../public/javascript/cadastro_curso.js"></script>
+    <script>
+        // Dados do fórum
+        const forumData = {
+            categories: [
+                { id: 1, name: "Planejamento de Aulas", description: "Discuta estratégias e métodos de ensino" },
+                { id: 2, name: "Recursos Didáticos", description: "Compartilhe materiais e ferramentas úteis" },
+                { id: 3, name: "Dúvidas Técnicas", description: "Tire dúvidas sobre a plataforma" }
+            ],
+            topics: [
+               
+            ]
+        };
 
-    
+        // Função para renderizar categorias
+        function renderCategories() {
+            const container = document.getElementById('categories-container');
+            container.innerHTML = '';
+            
+            forumData.categories.forEach(category => {
+                const topicCount = forumData.topics.filter(topic => topic.categoryId === category.id).length;
+                const categoryElement = document.createElement('div');
+                categoryElement.className = 'category';
+                categoryElement.innerHTML = `
+                    <h2>${category.name}</h2>
+                    <p title="${category.description}">${category.description}</p>
+                    <div class="topic-count">${topicCount} tópicos</div>
+                `;
+                categoryElement.addEventListener('click', () => filterTopicsByCategory(category.id));
+                container.appendChild(categoryElement);
+            });
+        }
+
+        // Função para renderizar tópicos
+        function renderTopics(topics = forumData.topics) {
+            const container = document.getElementById('topics-container');
+            container.innerHTML = '';
+            
+            if (topics.length === 0) {
+                container.innerHTML = '<p class="no-topics">Nenhum tópico encontrado nesta categoria.</p>';
+                return;
+            }
+            
+            topics.forEach(topic => {
+                const category = forumData.categories.find(c => c.id === topic.categoryId);
+                const topicElement = document.createElement('div');
+                topicElement.className = 'topic';
+                topicElement.innerHTML = `
+                    <div class="topic-header">
+                        <h2>${topic.title}</h2>
+                        <span class="category-label">${category.name}</span>
+                    </div>
+                    <div class="topic-meta">
+                        <span class="author">Por ${topic.author}</span>
+                        <span class="date">${topic.date}</span>
+                        <span class="replies">${topic.replies} respostas</span>
+                    </div>
+                    <div class="topic-content">
+                        <p>${topic.content}</p>
+                    </div>
+                    <a href="#" class="btn-reply">Responder</a>
+                `;
+                container.appendChild(topicElement);
+            });
+        }
+
+        // Função para filtrar tópicos por categoria
+        function filterTopicsByCategory(categoryId) {
+            const filteredTopics = forumData.topics.filter(topic => topic.categoryId === categoryId);
+            renderTopics(filteredTopics);
+            
+            // Atualiza o título para mostrar a categoria filtrada
+            const category = forumData.categories.find(c => c.id === categoryId);
+            document.querySelector('#forum .forum-header h1').textContent = `Fórum: ${category.name}`;
+        }
+
+        // Função para mostrar todos os tópicos
+        function showAllTopics() {
+            renderTopics();
+            document.querySelector('#forum .forum-header h1').textContent = 'Fórum de Professores';
+        }
+
+        // Função para popular o select de categorias
+        function populateCategorySelect() {
+            const select = document.getElementById('topic-category');
+            select.innerHTML = '<option value="">Selecione uma categoria</option>';
+            
+            forumData.categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.id;
+                option.textContent = category.name;
+                select.appendChild(option);
+            });
+        }
+
+        // Função para adicionar um novo tópico
+        function addNewTopic(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('topic-title').value;
+            const categoryId = parseInt(document.getElementById('topic-category').value);
+            const content = document.getElementById('topic-content').value;
+            
+            if (!title || !categoryId || !content) {
+                alert('Preencha todos os campos!');
+                return;
+            }
+            
+            // Criar novo tópico
+            const newTopic = {
+                id: forumData.topics.length + 1,
+                categoryId,
+                title,
+                author: "Você",
+                date: new Date().toLocaleDateString('pt-BR'),
+                replies: 0,
+                content
+            };
+            
+            // Adicionar ao array de tópicos
+            forumData.topics.unshift(newTopic);
+            
+            // Resetar formulário
+            document.getElementById('new-topic-form').reset();
+            
+            // Atualizar exibição mostrando apenas os tópicos da categoria selecionada
+            filterTopicsByCategory(categoryId);
+            
+            // Atualizar também a lista de categorias para mostrar a contagem atualizada
+            renderCategories();
+            
+            alert('Tópico publicado com sucesso na categoria ' + 
+                  forumData.categories.find(c => c.id === categoryId).name + '!');
+        }
+
+        // Função para mostrar seções
+        function mostrarSecao(secaoId) {
+            // Esconde todas as seções
+            document.querySelectorAll('.secao').forEach(secao => {
+                secao.classList.remove('ativa');
+                secao.hidden = true;
+            });
+            
+            // Mostra a seção selecionada
+            const secaoAtiva = document.getElementById(secaoId);
+            secaoAtiva.classList.add('ativa');
+            secaoAtiva.hidden = false;
+            
+            // Se for o fórum, renderiza os dados
+            if (secaoId === 'forum') {
+                renderCategories();
+                renderTopics();
+                populateCategorySelect();
+            }
+        }
+        
+        // Função para alternar o menu do usuário
+        function toggleMenu() {
+            const menu = document.getElementById('dropdownMenu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+        
+        // Fechar menu quando clicar fora
+        window.onclick = function(event) {
+            if (!event.target.matches('.user-avatar')) {
+                const dropdowns = document.getElementsByClassName('dropdown-menu');
+                for (let i = 0; i < dropdowns.length; i++) {
+                    const openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === 'block') {
+                        openDropdown.style.display = 'none';
+                    }
+                }
+            }
+        }
+        
+        // Função de logout (exemplo)
+        function logout() {
+            alert('Você foi desconectado');
+            // Aqui você adicionaria a lógica real de logout
+        }
+        
+        // Event Listeners
+        document.getElementById('new-topic-form').addEventListener('submit', addNewTopic);
+        
+        // Mostrar a seção inicial ao carregar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            mostrarSecao('seus-cursos');
+        });
+    </script>
 </body>
-
 </html>
