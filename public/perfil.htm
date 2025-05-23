@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../public/Css/perfil.css">
+    <title>Meu Perfil Profissional</title>
+
+</head>
+<body>
+    <div class="container">
+        <div class="cartao-perfil">
+            <div class="cabecalho-perfil">
+                <div class="foto-container">
+                    <!--Colocar foto-->
+                    <img id="fotoPerfil" src="sem-foto.jpg" alt="Foto de Perfil" class="foto-perfil">
+                    <button class="botao-alterar-foto" id="botaoAlterarFoto">
+                        <i class="fas fa-camera"></i>
+                    </button>
+                    <input type="file" id="inputArquivo" accept="image/*">
+                </div>
+                
+                <h1 class="nome-perfil" id="nomeUsuario"></h1>
+
+                <!--definir se ele é aluno ou professor-->
+                <h2 class="titulo-perfil" id="tituloUsuario"></h2>
+                
+                <div class="redes-sociais">
+                    <a href="#" class="link-rede-social" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="#" class="link-rede-social" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="link-rede-social" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="link-rede-social" title="Portfólio"><i class="fas fa-globe"></i></a>
+                </div>
+            </div>
+            
+            <div class="info-principal">
+                <p class="bio-perfil" id="bioUsuario">
+                    
+                </p>
+            </div>
+            
+            <div class="corpo-perfil">
+                <div class="secao">
+                    <h3 class="secao-titulo"><i class="fas fa-user"></i> Dados do Usuário</h3>
+                    <div class="grade-detalhes">
+                        <div class="grupo-info">
+                            <div class="item-info">
+                                <span class="rotulo-info">Email:</span>
+                                <span class="valor-info" id="emailUsuario"></span>
+                            </div>
+                            <div class="item-info">
+                                <span class="rotulo-info">Telefone:</span>
+                                <span class="valor-info" id="telefoneUsuario"></span>
+                            </div>
+                            <div class="item-info">
+                                <span class="rotulo-info">Curso:</span>
+                                <span class="valor-info" id="curso"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="secao">
+                    <h3 class="secao-titulo"><i class="fas fa-briefcase"></i>Status de usuário</h3>
+                    <div class="grade-detalhes">
+                        <div class="grupo-info">
+                            <div class="item-info">
+                                <span class="rotulo-info">Empresa:</span>
+                                <span class="valor-info" id="empresaUsuario">Minerva's Academy</span>
+                            </div>
+                            <div class="item-info">
+                                <span class="rotulo-info">Cargo:</span>
+                                <span class="valor-info" id="cargoUsuario"> </span>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+
+
+</body>
+</html>

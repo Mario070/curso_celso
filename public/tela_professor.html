@@ -17,6 +17,64 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+.modulos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    max-width: 900px;
+    margin: auto;
+}
+
+.modulo-card {
+    background-color: #f9f9f9;
+    border-left: 6px solid #4CAF50;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.modulo-card h4 {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.modulo-card p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 12px;
+}
+
+.modulo-card h5 {
+    font-size: 16px;
+    color: #2c3e50;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 4px;
+}
+
+.modulo-card ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.modulo-card ul li {
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #333;
+}
+
+.modulo-card a {
+    color: #007bff;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+.modulo-card a:hover {
+    text-decoration: underline;
+}
 
         body {
             background-color: #f5f5f5;
@@ -383,228 +441,16 @@
                 <p>Explore nossa seleção de cursos.</p>
 
                 <!-- Container com todos os cards de cursos -->
-                <div class="cursos-container">
-
-                    <!-- COMO VAI FICA OS CARDS DE CURSOS -->    
-                    <!-- Curso 1 -->
-                    <div class="curso-card">
-                        <img src="../public/IMG/002.jpg" alt="Curso de Python">
-                        <h3>Curso de Python</h3>
-                        <p>Maria</p>
-
-                        <div class="progress-bar">
-                            <span class="progress">0%</span>
-                        </div>
-
-                        <div class="actions">
-                            <!--BACKENTER = QUANDO CLICAR NOS CURSOS TEM TEM LEVA PARA PAGINA DE SEUS CURSOS, SE NECESSARIO,
-                            AQUI E APAGINA DE CURSOS-->
-                            <button onclick="acessarCurso(1)">Acessar curso</button>
-                        </div>
-                    </div>
-
-                    <!-- Curso 2 -->
-                    <div class="curso-card">
-                        <!-- Adicione a imagem do curso aqui -->
-                        <img src="../public/IMG/003.webp" alt="Curso de JavaScript">
-                        <h3>Nome do curso</h3>
-                        <p>Nome do Professor</p>
-
-                        <div class="progress-bar">
-                            <span class="progress">0%</span>
-                        </div>
-
-                        <div class="actions">
-                            <!--BACKENTER = QUANDO CLICAR NOS CURSOS TEM TEM LEVA PARA PAGINA DE SEUS CURSOS, SE NECESSARIO,
-                            AQUI E APAGINA DE CURSOS-->
-                            <button onclick="acessarCurso(2)">Acessar curso</button>
-                        </div>
-                    </div>
-
-                    <!-- Curso 3 -->
-                    <div class="curso-card">
-                        <!-- Adicione a imagem do curso aqui -->
-                        <img src="../public/IMG/003.webp" alt="Curso de JavaScript">
-                        <h3>Nome do curso</h3>
-                        <p>Nome do Professor</p>
-
-                        <div class="progress-bar">
-                            <span class="progress">0%</span>
-                        </div>
-
-                        <div class="actions">
-                            <!--BACKENTER = QUANDO CLICAR NOS CURSOS TEM TEM LEVA PARA PAGINA DE SEUS CURSOS, SE NECESSARIO,
-                            AQUI E APAGINA DE CURSOS-->
-                            <button onclick="acessarCurso(3)">Acessar curso</button>
-                        </div>
-                    </div>
-
+                <div class="cursos-container" id="cursos-container">
+                    <!-- Os cards serão inseridos via JavaScript -->
                 </div>
             </div>
 
-            <div id="adicionar_cursos" class="secao" hidden>
-                <div class="container">
-                    <!-- Área de Login -->
-                    <div id="secaoLogin" class="secao-login">
-                        <h2>Acesso do Administrador</h2>
-                        <form id="formularioLogin">
-                            <div class="grupo-formulario">
-                                <label for="usuario">Usuário:</label>
-                                <input type="text" id="usuario" required>
-                            </div>
-                            <div class="grupo-formulario">
-                                <label for="senha">Senha:</label>
-                                <input type="password" id="senha" required>
-                            </div>
-                            <button type="submit">Entrar</button>
-                            <p id="erroLogin" class="erro" style="display: none; margin-top: 10px;">Credenciais inválidas. Tente
-                                novamente.</p>
-                        </form>
-                    </div>
-            
-                    <!-- Painel do Administrador -->
-                    <div id="painelAdmin" class="painel-admin">
-                        <button id="botaoSair" class="botao-sair">Sair</button>
-                        <h2>Cadastro de Curso</h2>
-            
-                        <div id="mensagemSucesso" class="mensagem-sucesso"></div>
-            
-                        <!-- Lista de Cursos -->
-                        <table id="tabelaCursos">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Categoria</th>
-                                    <th>Nome</th>
-                                    <th>Descrição</th>
-                                    <th>Carga Horária</th>
-                                    <th>Apostilas</th>
-                                    <th>Avaliações</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody id="corpoTabelaCursos">
-                                <!-- Dados dos cursos serão inseridos aqui via JavaScript -->
-                            </tbody>
-                        </table>
-            
-                        <!-- Formulário de Adição/Edição -->
-                        <div class="formulario-adicionar-curso">
-                            <h3 id="tituloFormulario">Adicionar Novo Curso</h3>
-                            <form id="formularioCurso" enctype="multipart/form-data">
-                                <div class="linha-formulario">
-                                    <div class="campo-formulario">
-                                        <label for="categoriacurso">Categoria:</label>
-                                        <input type="text" id="categoriacurso" required>
-                                    </div>
-                                    <div class="campo-formulario">
-                                        <label for="nomecurso">Nome do curso:</label>
-                                        <input type="text" id="nomecurso" required>
-                                    </div>
-                                </div>
-            
-                                <div class="linha-formulario">
-                                    <div class="campo-formulario">
-                                        <label for="descricao_curso">Descrição:</label>
-                                        <textarea id="descricao_curso" rows="3" required></textarea>
-                                    </div>
-                                </div>
-            
-                                <!-- Seção de Vídeos -->
-                                <div class="secao-recurso">
-                                    <h4>Vídeos do Curso</h4>
-                                    <div class="grupo-recurso">
-                                        <label for="linkvideo">Link do vídeo:</label>
-                                        <div class="controle-recurso">
-                                            <input type="text" id="linkvideo" placeholder="https://...">
-                                            <label for="tempoVideo">Duração:</label>
-                                            <input type="time" id="tempoVideo" step="1">
-                                            <button type="button" class="botao-adicionar" onclick="adicionarVideo()">Adicionar
-                                                Vídeo</button>
-                                        </div>
-                                    </div>
-                                    <table class="tabela-recursos">
-                                        <thead>
-                                            <tr>
-                                                <th>Link</th>
-                                                <th>Duração</th>
-                                                <th>Ação</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="tabelaVideos">
-                                            <!-- Vídeos serão adicionados aqui -->
-                                        </tbody>
-                                    </table>
-                                </div>
-            
-                                <!-- Seção de Apostilas -->
-                                <div class="secao-recurso">
-                                    <h4>Apostilas do Curso</h4>
-                                    <div class="grupo-recurso">
-                                        <label for="arquivoApostila">Arquivo:</label>
-                                        <div class="controle-recurso">
-                                            <input type="file" id="arquivoApostila" accept=".pdf,.doc,.docx,.ppt,.pptx">
-                                            <label for="nomeApostila">Nome da apostila:</label>
-                                            <input type="text" id="nomeApostila" placeholder="Nome para exibição">
-                                            <button type="button" class="botao-adicionar" onclick="adicionarApostila()">Adicionar
-                                                Apostila</button>
-                                        </div>
-                                    </div>
-                                    <table class="tabela-recursos">
-                                        <thead>
-                                            <tr>
-                                                <th>Nome</th>
-                                                <th>Arquivo</th>
-                                                <th>Ação</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="tabelaApostilas">
-                                            <!-- Apostilas serão adicionadas aqui -->
-                                        </tbody>
-                                    </table>
-                                </div>
-            
-                                <!-- Seção de Avaliações -->
-                                <div class="secao-recurso">
-                                    <h4>Avaliações do Curso</h4>
-                                    <div class="grupo-recurso">
-                                        <label for="tituloAvaliacao">Título:</label>
-                                        <div class="controle-recurso">
-                                            <input type="text" id="tituloAvaliacao" placeholder="Título da avaliação">
-                                            <label for="linkAvaliacao">Link:</label>
-                                            <input type="url" id="linkAvaliacao" placeholder="https://...">
-                                            <button type="button" class="botao-adicionar" onclick="adicionarAvaliacao()">Adicionar
-                                                Avaliação</button>
-                                        </div>
-                                    </div>
-                                    <table class="tabela-recursos">
-                                        <thead>
-                                            <tr>
-                                                <th>Título</th>
-                                                <th>Link</th>
-                                                <th>Ação</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="tabelaAvaliacoes">
-                                            <!-- Avaliações serão adicionadas aqui -->
-                                        </tbody>
-                                    </table>
-                                </div>
-            
-                                <div class="botoes-acao">
-                                    <button type="submit" class="botao-salvar">Salvar Curso</button>
-                                    <button type="button" id="botaoCancelar" class="botao-cancelar" style="display: none;">Cancelar
-                                        Edição</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<h3>Módulos do curso</h3>
+<div id="modulos-container" class="modulos-container">
+    
+</div>
 
-            <div id="atividades" class="secao" hidden>
-
-            </div>
 
             <div id="forum" class="secao" hidden>
                 <div class="forum-header">
@@ -649,6 +495,7 @@
         <p>&copy; 2025 Minerva's Academy. Todos os direitos reservados.</p>
     </footer>
     <script src="../public/javascript/cadastro_curso.js"></script>
+    
     <script>
         // Dados do fórum
         const forumData = {
@@ -783,7 +630,7 @@
                   forumData.categories.find(c => c.id === categoryId).name + '!');
         }
 
-        // Função para mostrar seções
+       
         function mostrarSecao(secaoId) {
             // Esconde todas as seções
             document.querySelectorAll('.secao').forEach(secao => {
@@ -793,9 +640,17 @@
             
             // Mostra a seção selecionada
             const secaoAtiva = document.getElementById(secaoId);
-            secaoAtiva.classList.add('ativa');
-            secaoAtiva.hidden = false;
+            if (secaoAtiva) {
+                secaoAtiva.classList.add('ativa');
+                secaoAtiva.hidden = false;
+            } else {
+                console.warn(`Elemento com id '${secaoId}' não encontrado no DOM.`);
+            }
             
+            // Se for cursos, carrega os cards
+            if (secaoId === 'cursos') {
+                carregarCursosProfessor();
+            }
             // Se for o fórum, renderiza os dados
             if (secaoId === 'forum') {
                 renderCategories();
@@ -803,7 +658,13 @@
                 populateCategorySelect();
             }
         }
-        
+
+        // Evento para mostrar a seção inicial quando a página carregar
+        document.addEventListener('DOMContentLoaded', function() {
+            mostrarSecao('cursos');
+        });
+            
+          
         // Função para alternar o menu do usuário
         function toggleMenu() {
             const menu = document.getElementById('dropdownMenu');
@@ -836,6 +697,205 @@
         document.addEventListener('DOMContentLoaded', function() {
             mostrarSecao('seus-cursos');
         });
+
+ function carregarCursosProfessor() {
+    const professorId = localStorage.getItem('usuarioId');
+
+    if (!professorId) {
+        alert('Professor não identificado!');
+        return;
+    }
+
+    fetch(`http://localhost:3000/api/cursos-professor/${professorId}`)
+        .then(res => res.json())
+        .then(cursos => {
+            const container = document.getElementById('cursos-container');
+            container.innerHTML = '';
+
+            if (Array.isArray(cursos) && cursos.length > 0) {
+                cursos.forEach(curso => {
+                    const card = document.createElement('div');
+                    card.className = 'curso-card';
+                    card.innerHTML = `
+                        <h3>${curso.titulo}</h3>
+                        <p><strong>Descrição:</strong> ${curso.descricao || 'Sem descrição'}</p>
+                        <p><strong>Duração:</strong> ${curso.cargaHoraria !== undefined && curso.cargaHoraria !== null ? curso.cargaHoraria : 'N/A'} horas</p>
+                        <div class="actions"></div>
+                    `;
+
+                    const btn = document.createElement('button');
+                    btn.textContent = 'Acessar curso';
+                    btn.addEventListener('click', () => {
+                        acessarCurso(curso.id);
+                    });
+
+                    card.querySelector('.actions').appendChild(btn);
+                    container.appendChild(card);
+                });
+            } else {
+                container.innerHTML = '<p>Nenhum curso encontrado.</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao carregar cursos:', error);
+            alert('Erro ao carregar cursos.');
+        });
+}
+
+async function toggleModulos(cursoId, container) {
+    if (container.style.display === 'none') {
+        // Exibir módulos (buscar via API)
+        try {
+            const res = await fetch(`http://localhost:3000/api/cursos/${cursoId}/modulos`);
+            if (!res.ok) throw new Error('Erro ao buscar módulos');
+            const modulos = await res.json();
+
+            if (modulos.length === 0) {
+                container.innerHTML = '<p>Não há módulos para este curso.</p>';
+            } else {
+                const lista = document.createElement('ul');
+                modulos.forEach(modulo => {
+                    const li = document.createElement('li');
+                    li.textContent = `${modulo.ordem} - ${modulo.titulo}`;
+                    lista.appendChild(li);
+                });
+                container.innerHTML = '';
+                container.appendChild(lista);
+            }
+            container.style.display = 'block';
+        } catch (error) {
+            console.error(error);
+            alert('Erro ao carregar módulos do curso');
+        }
+    } else {
+        // Esconder módulos
+        container.style.display = 'none';
+    }
+}
+
+// Função para redirecionar para a página do curso
+/*function acessarCurso(id) {
+  fetch(`http://localhost:3000/api/modulos-curso/${id}`)
+        .then(res => res.json())
+        .then(modulos => {
+            const modulosContainer = document.getElementById('modulos-container');
+            modulosContainer.innerHTML = '';
+
+            if (Array.isArray(modulos) && modulos.length > 0) {
+                modulos.forEach(modulo => {
+                    const card = document.createElement('div');
+                    card.className = 'modulo-card';
+                    
+                    let html = `
+                        <h4>${modulo.titulo}</h4>
+                        <p><strong>Ordem:</strong> ${modulo.ordem}</p>
+                    `;
+
+                    // Apostilas
+                    if (modulo.apostila.length > 0) {
+                        html += `<h5>Apostilas:</h5><ul>`;
+                        modulo.apostila.forEach(apostila => {
+                            html += `<li>${apostila.titulo} - <a href="${apostila.arquivoUrl}" target="_blank">Abrir</a></li>`;
+                        });
+                        html += `</ul>`;
+                    }
+
+                    // Vídeos
+                    if (modulo.video.length > 0) {
+                        html += `<h5>Vídeos:</h5><ul>`;
+                        modulo.video.forEach(video => {
+                            html += `<li>${video.titulo} (${video.duracao} min) - <a href="${video.urlVideo}" target="_blank">Assistir</a></li>`;
+                        });
+                        html += `</ul>`;
+                    }
+
+                    // Avaliações
+                    if (modulo.avaliacao.length > 0) {
+                        html += `<h5>Avaliações:</h5><ul>`;
+                        modulo.avaliacao.forEach(avaliacao => {
+                            html += `<li>${avaliacao.titulo} - <a href="${avaliacao.url}" target="_blank">Abrir</a></li>`;
+                        });
+                        html += `</ul>`;
+                    }
+
+                    card.innerHTML = html;
+                    modulosContainer.appendChild(card);
+                });
+            } else {
+                modulosContainer.innerHTML = '<p>Nenhum módulo encontrado para este curso.</p>';
+            }
+            
+        })
+        .catch(error => {
+            console.error('Erro ao carregar módulos:', error);
+            alert('Erro ao carregar módulos do curso.');
+        });
+}*/
+
+function acessarCurso(id) {
+  fetch(`http://localhost:3000/api/modulos-curso/${id}`)
+        .then(res => res.json())
+        .then(modulos => {
+            const modulosContainer = document.getElementById('modulos-container');
+            modulosContainer.innerHTML = '';
+
+            if (Array.isArray(modulos) && modulos.length > 0) {
+                modulos.forEach(modulo => {
+                    const card = document.createElement('div');
+                    card.className = 'modulo-card';
+                    
+                    let html = `
+                        <h4>${modulo.titulo}</h4>
+                        <p><strong>Ordem:</strong> ${modulo.ordem}</p>
+                    `;
+
+                    // Apostilas
+                    if (modulo.apostila.length > 0) {
+                        html += `<h5>Apostilas:</h5><ul>`;
+                        modulo.apostila.forEach(apostila => {
+                            html += `<li>${apostila.titulo} - <a href="${apostila.arquivoUrl}" target="_blank">Abrir</a></li>`;
+                        });
+                        html += `</ul>`;
+                    }
+
+                    // Vídeos
+                    if (modulo.video.length > 0) {
+                        html += `<h5>Vídeos:</h5><ul>`;
+                        modulo.video.forEach(video => {
+                            html += `<li>${video.titulo} (${video.duracao} min) - <a href="${video.urlVideo}" target="_blank">Assistir</a></li>`;
+                        });
+                        html += `</ul>`;
+                    }
+
+                    // Avaliações
+                    if (modulo.avaliacao.length > 0) {
+                        html += `<h5>Avaliações:</h5><ul>`;
+                        modulo.avaliacao.forEach(avaliacao => {
+                            html += `<li>${avaliacao.titulo} - <a href="${avaliacao.url}" target="_blank">Abrir</a></li>`;
+                        });
+                        html += `</ul>`;
+                    }
+
+                    card.innerHTML = html;
+                    modulosContainer.appendChild(card);
+                });
+
+                // Adicionar botões após listar todos os módulos
+                const botoesDiv = document.createElement('div');
+                botoesDiv.className = 'modulo-actions';
+                modulosContainer.appendChild(botoesDiv);
+
+            } else {
+                modulosContainer.innerHTML = '<p>Nenhum módulo encontrado para este curso.</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao carregar módulos:', error);
+            alert('Erro ao carregar módulos do curso.');
+        });
+}
+
+
     </script>
 </body>
 </html>

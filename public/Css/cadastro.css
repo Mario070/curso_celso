@@ -1,0 +1,274 @@
+ /* Reset e configurações básicas */
+ * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+header img {
+    height: 40px;
+    margin-right: 10px;
+}
+
+header h1 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #ecf0f1;
+}
+
+/* Container principal */
+.container-principal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    padding: 2rem;
+    background-color: #ecf0f1;
+}
+
+/* Formulário de cadastro */
+.cadastro {
+    background-color: white;
+    padding: 2.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 500px;
+    border: 1px solid #e0e0e0;
+}
+
+.cadastro h1 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.grupo-formulario {
+    margin-bottom: 1rem;
+}
+
+.grupo-formulario label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.controle-formulario {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    background-color: #f9f9f9;
+}
+
+.controle-formulario:focus {
+    outline: none;
+    border-color: #3498db;
+    background-color: white;
+}
+
+.botao {
+    width: 100%;
+    padding: 12px;
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 1.5rem;
+    font-weight: 500;
+}
+
+.botao:hover {
+    background-color: #34495e;
+}
+
+.botao-secundario {
+    background-color: #95a5a6;
+}
+
+.botao-secundario:hover {
+    background-color: #7f8c8d;
+}
+
+/* Seção de planos */
+.secao-planos {
+    display: none;
+    margin-top: 2rem;
+}
+
+.secao-planos h2 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.opcoes-plano {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.opcao-plano {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.opcao-plano:hover {
+    border-color: #3498db;
+}
+
+.opcao-plano.selecionado {
+    border-color: #3498db;
+    background-color: #f0f7fc;
+}
+
+.opcao-plano input[type="radio"] {
+    margin-right: 1rem;
+}
+
+.info-plano {
+    flex-grow: 1;
+}
+
+.nome-plano {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.preco-plano {
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+.descricao-plano {
+    color: #7f8c8d;
+    font-size: 0.875rem;
+}
+
+/* Seção de pagamentos */
+.pagamentos {
+    display: none;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #eee;
+}
+
+.pagamentos h2 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.metodos-pagamento {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.metodo-pagamento {
+    display: flex;
+    align-items: center;
+}
+
+.metodo-pagamento input[type="radio"] {
+    width: auto;
+    margin-right: 0.5rem;
+}
+
+.detalhes-cartao {
+    display: none;
+    margin-top: 1rem;
+}
+
+.linha {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.coluna {
+    flex: 1;
+}
+
+/* Mensagens de erro */
+.mensagem-erro {
+    color: #e74c3c;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: none;
+}
+
+.invalido {
+    border-color: #e74c3c !important;
+}
+
+/* Campo tipo cadastro oculto */
+.tipo-cadastro-oculto {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+    overflow: hidden;
+}
+
+/* Rodapé */
+footer {
+    background-color: #2c3e50;
+    color: #bdc3c7;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+}
+
+/* Responsividade */
+@media (max-width: 576px) {
+    .cadastro {
+        padding: 1.5rem;
+    }
+
+    .metodos-pagamento {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .linha {
+        flex-direction: column;
+        gap: 0;
+    }
+}

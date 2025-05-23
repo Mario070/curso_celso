@@ -37,7 +37,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             width: 100%;
             position: relative;
             z-index: 10;
@@ -71,7 +71,7 @@
             top: 50px;
             background-color: white;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             width: 200px;
             z-index: 100;
             display: none;
@@ -114,9 +114,11 @@
             color: white;
             padding: 1.5rem 0;
             flex-shrink: 0;
-            height: calc(100vh - 60px); /* Altura total menos a altura da top-bar */
+            height: calc(100vh - 60px);
+            /* Altura total menos a altura da top-bar */
             position: sticky;
-            top: 60px; /* Altura da top-bar */
+            top: 60px;
+            /* Altura da top-bar */
             overflow-y: auto;
         }
 
@@ -147,7 +149,8 @@
             flex: 1;
             padding: 2rem;
             background-color: #f9f9f9;
-            min-height: calc(100vh - 60px); /* Altura total menos a altura da top-bar */
+            min-height: calc(100vh - 60px);
+            /* Altura total menos a altura da top-bar */
             overflow-y: auto;
         }
 
@@ -188,7 +191,7 @@
             .conteudo-principal {
                 flex-direction: column;
             }
-            
+
             .menu-lateral {
                 width: 100%;
                 height: auto;
@@ -199,12 +202,12 @@
                 justify-content: space-around;
                 padding: 0.5rem 0;
             }
-            
+
             .menu-lateral button {
                 padding: 0.5rem;
                 text-align: center;
             }
-            
+
             .menu-lateral hr {
                 display: none;
             }
@@ -214,9 +217,10 @@
                 min-height: auto;
             }
         }
+
+        
     </style>
-    <script src="../public/javascript/forum_professor.js"></script>
-    <script src="../public/javascript/meus_cursos.js"></script>
+
     <title>Minerva's Academy</title>
 </head>
 
@@ -238,110 +242,72 @@
     </div>
 
     <div class="conteudo-principal">
-        <div class="menu-lateral">
-            <hr>
-            <button onclick="mostrarSecao('seus-cursos')">Seus cursos</button>
-            <hr>
-            <button onclick="mostrarSecao('cursos')">Cursos</button>
-            <hr>
-        </div>
+  <div class="menu-lateral">
+    <hr>
+    <button onclick="mostrarSecao('seus-cursos')">Seus cursos</button>
+    <hr>
+    <button onclick="mostrarSecao('cursos')">Cursos</button>
+    <hr>
+    <button onclick="mostrarSecao('apostilas')">Apostilas</button>
+    <hr>
+    <button onclick="mostrarSecao('avaliacoes')">Avaliações</button>
+    <hr>
+  </div>
 
-        <div class="conteudo">
-            <!-- Seção: Seus Cursos auluno -->
-            <div id="seus-cursos" class="secao">
-                <h1>Seus Cursos</h1>
-                <p>Aqui estão os cursos nos quais você está matriculado.</p>
-                <!-- COMO VAI FICA OS CARDS DE CURSOS -->
-                <!-- Curso 1 -->
-                <div class="curso-card">
-                    <img src="../public/IMG/002.jpg" alt="Curso de Python">
-                    <h3>Curso de Python</h3>
-                    <p>Maria</p>
+  <div class="conteudo">
+    <!-- Seção: Seus Cursos -->
+    <div id="seus-cursos" class="secao">
+      <h1>Seus Cursos</h1>
+      <p>Aqui estão os cursos nos quais você está matriculado.</p>
 
-                    <div class="progress-bar">
-                        <span class="progress">0%</span>
-                    </div>
+      <!-- Container dinâmico para cursos do aluno -->
+      <div id="seus-cursos-lista" class="cursos-container"></div>
 
-                    <div class="actions">
-                        <!--BACKENTER = QUANDO CLICAR NOS CURSOS TEM TEM LEVA PARA PAGINA DE SEUS CURSOS, SE NECESSARIO,
-                                AQUI E APAGINA DE CURSOS-->
-                        <button onclick="acessarCurso(1)">Acessar curso</button>
-                    </div>
-                </div>
-
-                <!-- Div para exbir o video do curso (fora do bloco acima) -->
-                <div id="cursoDetalhes" hidden>
-                    <iframe id="cursoVideo" width="60%" height="360" frameborder="0" allowfullscreen></iframe>
-                    <h2 id="cursoTitulo"></h2>
-                    <button onclick="voltarParaCursos()">Voltar</button>
-                </div>
-            </div>
-
-            <!-- Seção: Todos os Cursos -->
-            <div id="cursos" class="secao" hidden>
-                <h1>Cursos Disponíveis</h1>
-                <p>Explore nossa seleção de cursos.</p>
-
-                <!-- Container com todos os cards de cursos -->
-                <div class="cursos-container">
-                    <!-- COMO VAI FICA OS CARDS DE CURSOS -->
-                    <!-- Curso 1 -->
-                    <div class="curso-card">
-                        <img src="../public/IMG/002.jpg" alt="Curso de Python">
-                        <h3>Curso de Python</h3>
-                        <p>Maria</p>
-
-                        <div class="progress-bar">
-                            <span class="progress">0%</span>
-                        </div>
-
-                        <div class="actions">
-                            <button onclick="acessarCurso(1)">Acessar curso</button>
-                        </div>
-                    </div>
-
-                    <!-- Curso 2 -->
-                    <div class="curso-card">
-                        <img src="../public/IMG/003.webp" alt="Curso de JavaScript">
-                        <h3>nome do curso</h3>
-                        <p>Nome do Professor</p>
-
-                        <div class="progress-bar">
-                            <span class="progress">0%</span>
-                        </div>
-
-                        <div class="actions">
-                            <button onclick="acessarCurso(2)">Acessar curso</button>
-                        </div>
-                    </div>
-
-                    <!-- Curso 3 -->
-                    <div class="curso-card">
-                        <img src="../public/IMG/003.webp" alt="Curso de JavaScript">
-                        <h3>nome do curso</h3>
-                        <p>Nome do Professor</p>
-
-                        <div class="progress-bar">
-                            <span class="progress">0%</span>
-                        </div>
-
-                        <div class="actions">
-                            <button onclick="acessarCurso(3)">Acessar curso</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="atividades" class="secao" hidden>
-                <h1>Atividade e Progresso</h1>
-                <p>Acompanhe seu desempenho nos cursos.</p>
-            </div>
-        </div>
+      <!-- Detalhes do curso (opcional) -->
+      <div id="cursoDetalhes" hidden>
+        <iframe id="cursoVideo" width="60%" height="360" frameborder="0" allowfullscreen></iframe>
+        <h2 id="cursoTitulo"></h2>
+        <button onclick="voltarParaCursos()">Voltar</button>
+      </div>
     </div>
+
+    <!-- Seção: Cursos Disponíveis -->
+    <div id="cursos" class="secao" hidden>
+      <h1>Cursos Disponíveis</h1>
+      <p>Explore nossa seleção de cursos.</p>
+      <div id="cursos-disponiveis" class="cursos-container"></div>
+    </div>
+
+    <!-- Seção: Apostilas -->
+    <div id="apostilas" class="secao" hidden>
+      <h1>Apostilas</h1>
+      <p>Visualize as apostilas dos cursos nos quais você está matriculado.</p>
+      <div id="apostilas-container" class="cursos-container"></div>
+    </div>
+
+    <!-- Seção: Avaliações -->
+    <div id="avaliacoes" class="secao" hidden>
+      <h1>Avaliações</h1>
+      <p>Faça as avaliações disponíveis para seus cursos.</p>
+      <div id="avaliacoes-container" class="cursos-container"></div>
+    </div>
+
+    <!-- Seção: Atividades -->
+    <div id="atividades" class="secao" hidden>
+      <h1>Atividade e Progresso</h1>
+      <p>Acompanhe seu desempenho nos cursos.</p>
+    </div>
+  </div>
+</div>
+
+
+    
 
     <footer>
         <p>&copy; 2025 Minerva's Academy. Todos os direitos reservados.</p>
     </footer>
+
+
 
     <script>
         // Dados do fórum
@@ -361,21 +327,21 @@
                 secao.classList.remove('ativa');
                 secao.hidden = true;
             });
-            
+
             // Mostra a seção selecionada
             const secaoAtiva = document.getElementById(secaoId);
             secaoAtiva.classList.add('ativa');
             secaoAtiva.hidden = false;
         }
-        
+
         // Função para alternar o menu do usuário
         function toggleMenu() {
             const menu = document.getElementById('dropdownMenu');
             menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
         }
-        
+
         // Fechar menu quando clicar fora
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             if (!event.target.matches('.user-avatar')) {
                 const dropdowns = document.getElementsByClassName('dropdown-menu');
                 for (let i = 0; i < dropdowns.length; i++) {
@@ -386,16 +352,20 @@
                 }
             }
         }
-        
+
         // Função de logout (exemplo)
         function logout() {
             alert('Você foi desconectado');
         }
-        
+
         // Mostrar a seção inicial ao carregar a página
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             mostrarSecao('seus-cursos');
         });
     </script>
+
+    <script src="../public/javascript/scriptCardCurso.js"></script>
+    <script src="../public/javascript/meu_curso.js"></script>
 </body>
+
 </html>

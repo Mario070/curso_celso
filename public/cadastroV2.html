@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="">
+    <title>Cadastro</title>
+
+</head>
+<body>
+    <header>
+        <h1>Minerva's Academy</h1>
+    </header>
+
+    <div class="container-principal">
+        <div class="cadastro">
+            <h1 id="titulo-formulario">CADASTRE-SE</h1>
+            
+            <form id="formulario-cadastro">
+                <!-- Campo oculto para tipo de cadastro -->
+                <div class="grupo-formulario tipo-cadastro-oculto">
+                    <label for="tipo_cadastro">Tipo de cadastro</label>
+                    <select name="tipo_cadastro" id="tipo_cadastro" class="controle-formulario">
+                        <option value="aluno" selected>Aluno</option>
+                        <option value="professor">Professor</option>
+                    </select>
+                </div>
+                
+                <div class="grupo-formulario">
+                    <label for="nome_cadastro">Nome</label>
+                    <input type="text" id="nome_cadastro" class="controle-formulario" placeholder="Digite seu nome" required>
+                    <div class="mensagem-erro" id="erro-nome">Por favor, insira seu nome</div>
+                </div>
+                
+                <div class="grupo-formulario">
+                    <label for="sobrenome_cadastro">Sobrenome</label>
+                    <input type="text" id="sobrenome_cadastro" class="controle-formulario" placeholder="Digite seu sobrenome" required>
+                    <div class="mensagem-erro" id="erro-sobrenome">Por favor, insira seu sobrenome</div>
+                </div>
+                
+                <div class="grupo-formulario">
+                    <label for="email_cadastro">E-mail</label>
+                    <input type="email" id="email_cadastro" class="controle-formulario" placeholder="Digite seu e-mail" required>
+                    <div class="mensagem-erro" id="erro-email">Por favor, insira um e-mail válido</div>
+                </div>
+                
+                <div class="grupo-formulario">
+                    <label for="cpf_cadastro">CPF</label>
+                    <input type="text" id="cpf_cadastro" class="controle-formulario" placeholder="Digite seu CPF" required>
+                    <div class="mensagem-erro" id="erro-cpf">Por favor, insira um CPF válido</div>
+                </div>
+                
+                <div class="grupo-formulario">
+                    <label for="login_cadastro">Usuário</label>
+                    <input type="text" id="login_cadastro" class="controle-formulario" placeholder="Crie um nome de usuário" required>
+                    <div class="mensagem-erro" id="erro-usuario">Por favor, crie um nome de usuário</div>
+                </div>
+                
+                <div class="grupo-formulario">
+                    <label for="password_cadastro">Senha</label>
+                    <input type="password" id="password_cadastro" class="controle-formulario" placeholder="Crie uma senha" required>
+                    <div class="mensagem-erro" id="erro-senha">Por favor, crie uma senha</div>
+                </div>
+                
+                <button type="button" id="botao-avancar" class="botao">Avançar</button>
+            </form>
+            
+            <!-- Seção de seleção de planos -->
+            <div class="secao-planos" id="secao-planos">
+                <h2>Selecione seu Plano</h2>
+                
+                <div class="opcoes-plano">
+                    <label class="opcao-plano" for="plano-basico">
+                        <input type="radio" id="plano-basico" name="plano" value="basico" required>
+                        <div class="info-plano">
+                            <div class="nome-plano">Plano Básico</div>
+                            <div class="preco-plano">R$ 29,90/mês</div>
+                            <div class="descricao-plano">Acesso a todos os cursos básicos</div>
+                        </div>
+                    </label>
+                    
+                    <label class="opcao-plano" for="plano-intermediario">
+                        <input type="radio" id="plano-intermediario" name="plano" value="intermediario">
+                        <div class="info-plano">
+                            <div class="nome-plano">Plano Intermediário</div>
+                            <div class="preco-plano">R$ 59,90/mês</div>
+                            <div class="descricao-plano">Acesso a todos os cursos básicos e intermediários</div>
+                        </div>
+                    </label>
+                    
+                    <label class="opcao-plano" for="plano-premium">
+                        <input type="radio" id="plano-premium" name="plano" value="premium">
+                        <div class="info-plano">
+                            <div class="nome-plano">Plano Premium</div>
+                            <div class="preco-plano">R$ 99,90/mês</div>
+                            <div class="descricao-plano">Acesso completo a todos os cursos e materiais exclusivos</div>
+                        </div>
+                    </label>
+                </div>
+                
+                <button type="button" id="botao-voltar-plano" class="botao botao-secundario">Voltar</button>
+                <button type="button" id="botao-prosseguir" class="botao">Prosseguir para Pagamento</button>
+            </div>
+            
+            <!-- Seção de pagamentos -->
+            <div class="pagamentos" id="secao-pagamento">
+                <h2>Método de Pagamento</h2>
+                
+                <div class="metodos-pagamento">
+                    <div class="metodo-pagamento">
+                        <input type="radio" name="metodo_pagamento" id="cartao_credito" value="cartao">
+                        <label for="cartao_credito">Cartão de crédito</label>
+                    </div>
+                    <div class="metodo-pagamento">
+                        <input type="radio" name="metodo_pagamento" id="boleto" value="boleto">
+                        <label for="boleto">Boleto</label>
+                    </div>
+                    <div class="metodo-pagamento">
+                        <input type="radio" name="metodo_pagamento" id="pix" value="pix">
+                        <label for="pix">PIX</label>
+                    </div>
+                </div>
+                
+                <div class="detalhes-cartao" id="detalhes-cartao">
+                    <div class="grupo-formulario">
+                        <label for="titular_cartao">Nome do titular do cartão</label>
+                        <input type="text" id="titular_cartao" class="controle-formulario" placeholder="Nome como está no cartão">
+                        <div class="mensagem-erro" id="erro-titular">Por favor, insira o nome do titular</div>
+                    </div>
+                    
+                    <div class="grupo-formulario">
+                        <label for="numero_cartao">Número do cartão</label>
+                        <input type="text" id="numero_cartao" class="controle-formulario" placeholder="0000 0000 0000 0000">
+                        <div class="mensagem-erro" id="erro-numero">Por favor, insira um número válido</div>
+                    </div>
+                    
+                    <div class="linha">
+                        <div class="coluna">
+                            <div class="grupo-formulario">
+                                <label for="validade_cartao">Validade</label>
+                                <input type="month" id="validade_cartao" class="controle-formulario" placeholder="MM/AAAA">
+                                <div class="mensagem-erro" id="erro-validade">Por favor, insira a validade</div>
+                            </div>
+                        </div>
+                        <div class="coluna">
+                            <div class="grupo-formulario">
+                                <label for="cvv_cartao">CVV</label>
+                                <input type="number" id="cvv_cartao" class="controle-formulario" placeholder="123" maxlength="3">
+                                <div class="mensagem-erro" id="erro-cvv">Por favor, insira o CVV</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="button" id="botao-voltar-pagamento" class="botao botao-secundario">Voltar</button>
+                <button type="button" id="botao-concluir" class="botao">Concluir Cadastro</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        © 2023 Instituição. Todos os direitos reservados.
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elementos do DOM
+            const formularioCadastro = document.getElementById('formulario-cadastro');
+            const secaoPlanos = document.getElementById('secao-planos');
+            const secaoPagamento = document.getElementById('secao-pagamento');
+            const detalhesCartao = document.getElementById('detalhes-cartao');
+            const tipoCadastro = document.getElementById('tipo_cadastro');
+            const tituloFormulario = document.getElementById('titulo-formulario');
+            
+            // Botões
+            const botaoAvancar = document.getElementById('botao-avancar');
+            const botaoVoltarPlano = document.getElementById('botao-voltar-plano');
+            const botaoProsseguir = document.getElementById('botao-prosseguir');
+            const botaoVoltarPagamento = document.getElementById('botao-voltar-pagamento');
+            const botaoConcluir = document.getElementById('botao-concluir');
+            
+            // Métodos de pagamento
+            const metodosPagamento = document.querySelectorAll('input[name="metodo_pagamento"]');
+            
+            // Planos
+            const opcoesPlano = document.querySelectorAll('.opcao-plano');
+            
+            // Configurar tipo de cadastro a partir da URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const tipo = urlParams.get('tipo') || 'aluno';
+            
+            // Definir o valor do tipo de cadastro
+            tipoCadastro.value = tipo;
+            
+            // Configurar título do formulário
+            function atualizarTitulo() {
+                tituloFormulario.textContent = tipoCadastro.value === 'aluno' ? 'CADASTRO DE ALUNO' : 'CADASTRO DE PROFESSOR';
+            }
+            
+            atualizarTitulo();
+            
+            // Seleção de planos - efeito visual
+            opcoesPlano.forEach(opcao => {
+                opcao.addEventListener('click', function() {
+                    opcoesPlano.forEach(opt => opt.classList.remove('selecionado'));
+                    this.classList.add('selecionado');
+                });
+            });
+            
+            // Mostrar campos de cartão quando selecionado
+            metodosPagamento.forEach(metodo => {
+                metodo.addEventListener('change', function() {
+                    detalhesCartao.style.display = this.id === 'cartao_credito' ? 'block' : 'none';
+                });
+            });
+            
+            // Validação de campos
+            function validarCampo(campoId, erroId, validacaoFn) {
+                const campo = document.getElementById(campoId);
+                const erro = document.getElementById(erroId);
+                const valido = validacaoFn(campo.value);
+                
+                if (!valido) {
+                    campo.classList.add('invalido');
+                    erro.style.display = 'block';
+                    return false;
+                } else {
+                    campo.classList.remove('invalido');
+                    erro.style.display = 'none';
+                    return true;
+                }
+            }
+            
+            // Validação do formulário principal
+            function validarFormularioPrincipal() {
+                let valido = true;
+                
+                valido &= validarCampo('nome_cadastro', 'erro-nome', valor => valor.trim() !== '');
+                valido &= validarCampo('sobrenome_cadastro', 'erro-sobrenome', valor => valor.trim() !== '');
+                valido &= validarCampo('email_cadastro', 'erro-email', valor => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor));
+                valido &= validarCampo('cpf_cadastro', 'erro-cpf', valor => /^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$/.test(valor));
+                valido &= validarCampo('login_cadastro', 'erro-usuario', valor => valor.trim() !== '');
+                valido &= validarCampo('password_cadastro', 'erro-senha', valor => valor.trim() !== '');
+                
+                return valido;
+            }
+            
+            // Validação do plano selecionado
+            function validarPlano() {
+                const planoSelecionado = document.querySelector('input[name="plano"]:checked');
+                
+                if (!planoSelecionado) {
+                    alert('Por favor, selecione um plano.');
+                    return false;
+                }
+                
+                return true;
+            }
+            
+            // Validação dos dados do pagamento
+            function validarPagamento() {
+                const metodoSelecionado = document.querySelector('input[name="metodo_pagamento"]:checked');
+                
+                if (!metodoSelecionado) {
+                    alert('Por favor, selecione um método de pagamento.');
+                    return false;
+                }
+                
+                if (metodoSelecionado.id === 'cartao_credito') {
+                    let valido = true;
+                    
+                    valido &= validarCampo('titular_cartao', 'erro-titular', valor => valor.trim() !== '');
+                    valido &= validarCampo('numero_cartao', 'erro-numero', valor => /^\d{16}$/.test(valor.replace(/\s/g, '')));
+                    valido &= validarCampo('validade_cartao', 'erro-validade', valor => valor.trim() !== '');
+                    valido &= validarCampo('cvv_cartao', 'erro-cvv', valor => /^\d{3}$/.test(valor));
+                    
+                    return valido;
+                }
+                
+                return true;
+            }
+            
+            // Evento do botão Avançar
+            botaoAvancar.addEventListener('click', function() {
+                if (validarFormularioPrincipal()) {
+                    if (tipoCadastro.value === 'aluno') {
+                        formularioCadastro.style.display = 'none';
+                        secaoPlanos.style.display = 'block';
+                    } else {
+                        enviarFormulario();
+                    }
+                }
+            });
+            
+            // Evento do botão Voltar (da seleção de planos)
+            botaoVoltarPlano.addEventListener('click', function() {
+                secaoPlanos.style.display = 'none';
+                formularioCadastro.style.display = 'block';
+            });
+            
+            // Evento do botão Prosseguir (para pagamento)
+            botaoProsseguir.addEventListener('click', function() {
+                if (validarPlano()) {
+                    secaoPlanos.style.display = 'none';
+                    secaoPagamento.style.display = 'block';
+                }
+            });
+            
+            // Evento do botão Voltar (do pagamento)
+            botaoVoltarPagamento.addEventListener('click', function() {
+                secaoPagamento.style.display = 'none';
+                secaoPlanos.style.display = 'block';
+            });
+            
+            // Evento do botão Concluir
+            botaoConcluir.addEventListener('click', function() {
+                if (validarPagamento()) {
+                    enviarFormulario();
+                }
+            });
+            
+            // Função para enviar o formulário
+            function enviarFormulario() {
+                // Simular envio do formulário
+                alert('Cadastro realizado com sucesso!');
+                
+                // Redirecionar após 1 segundo (simulação)
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1000);
+            }
+            
+            // Máscara para CPF
+            document.getElementById('cpf_cadastro').addEventListener('input', function(e) {
+                let valor = e.target.value.replace(/\D/g, '');
+                
+                if (valor.length > 3) {
+                    valor = valor.replace(/^(\d{3})(\d)/, '$1.$2');
+                }
+                if (valor.length > 6) {
+                    valor = valor.replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3');
+                }
+                if (valor.length > 9) {
+                    valor = valor.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4');
+                }
+                if (valor.length > 11) {
+                    valor = valor.substring(0, 14);
+                }
+                
+                e.target.value = valor;
+            });
+            
+            // Máscara para número do cartão
+            document.getElementById('numero_cartao').addEventListener('input', function(e) {
+                let valor = e.target.value.replace(/\D/g, '');
+                
+                if (valor.length > 4) {
+                    valor = valor.replace(/^(\d{4})(\d)/, '$1 $2');
+                }
+                if (valor.length > 9) {
+                    valor = valor.replace(/^(\d{4})\s(\d{4})(\d)/, '$1 $2 $3');
+                }
+                if (valor.length > 14) {
+                    valor = valor.replace(/^(\d{4})\s(\d{4})\s(\d{4})(\d)/, '$1 $2 $3 $4');
+                }
+                if (valor.length > 19) {
+                    valor = valor.substring(0, 19);
+                }
+                
+                e.target.value = valor;
+            });
+        });
+    </script>
+</body>
+</html>

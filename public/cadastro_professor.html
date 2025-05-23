@@ -46,7 +46,7 @@
         }
 
         .painel-admin {
-            display: none;
+            display: block;
         }
 
         h2, h3 {
@@ -204,24 +204,6 @@
         </div>
     </header>
 
-    <div class="container">
-        <!-- Área de Login -->
-        <div id="secaoLogin" class="secao-login">
-            <h2>Acesso do Administrador</h2>
-            <form id="formularioLogin">
-                <div class="grupo-formulario">
-                    <label for="usuario">Usuário:</label>
-                    <input type="text" id="usuario" required>
-                </div>
-                <div class="grupo-formulario">
-                    <label for="senha">Senha:</label>
-                    <input type="password" id="senha" required>
-                </div>
-                <button type="submit">Entrar</button>
-                <p id="erroLogin" class="erro" style="display: none; margin-top: 10px;">Credenciais inválidas. Tente novamente.</p>
-            </form>
-        </div>
-
         <!-- Painel do Administrador -->
         <div id="painelAdmin" class="painel-admin">
             <button id="botaoSair" class="botao-sair">Sair</button>
@@ -238,8 +220,6 @@
                         <th>Email</th>
                         <th>Telefone</th>
                         <th>CPF</th>
-                        <th>Disciplina</th>
-                        <th>Formação</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -252,56 +232,48 @@
                     <input type="hidden" id="professorId">
                     <div class="linha-formulario">
                         <div class="campo-formulario">
-                            <label for="nomeProfessor">Nome:</label>
-                            <input type="text" id="nomeProfessor" required>
+                            <label for="nome_professor">Nome:</label>
+                            <input type="text" id="nome_professor" required>
                         </div>
                         <div class="campo-formulario">
-                            <label for="sobrenomeProfessor">Sobrenome:</label>
-                            <input type="text" id="sobrenomeProfessor" required>
-                        </div>
-                    </div>
-                    <div class="linha-formulario">
-                        <div class="campo-formulario">
-                            <label for="emailProfessor">Email:</label>
-                            <input type="email" id="emailProfessor" required>
-                        </div>
-                        <div class="campo-formulario">
-                            <label for="telefoneProfessor">Telefone:</label>
-                            <input type="tel" id="telefoneProfessor" required>
+                            <label for="sobrenome_professor">Sobrenome:</label>
+                            <input type="text" id="sobrenome_professor" required>
                         </div>
                     </div>
+                    <hiden>
+                        <label for="tipo_cadastro"><br>Tipo de cadastro</label>
+                                <select name="tipo_cadastro" id="tipo_cadastro">
+                                    <option value="professor">Professor</option>
+                                  <!---  <option value="professor">Professor</option>-->
+                                </select>
+                    </hiden>
                     <div class="linha-formulario">
                         <div class="campo-formulario">
-                            <label for="cpfProfessor">CPF:</label>
-                            <input type="text" id="cpfProfessor" required>
+                            <label for="email_professor">Email:</label>
+                            <input type="email" id="email_professor" required>
                         </div>
+                        <div class="linha-formulario">
                         <div class="campo-formulario">
-                            <label for="disciplinaProfessor">Disciplina:</label>
-                            <input type="text" id="disciplinaProfessor" required>
+                            <label for="password_professor">Senha:</label>
+                            <input type="password" id="password_professor" required>
                         </div>
                     </div>
-                    <div class="linha-formulario">
                         <div class="campo-formulario">
-                            <label for="formacaoProfessor">Formação:</label>
-                            <select id="formacaoProfessor" required>
-                                <option value="">Selecione...</option>
-                                <option value="Graduação">Graduação</option>
-                                <option value="Especialização">Especialização</option>
-                                <option value="Mestrado">Mestrado</option>
-                                <option value="Doutorado">Doutorado</option>
-                            </select>
+                            <label for="cpf_professor">CPF:</label>
+                            <input type="text" id="cpf_professor" required>
                         </div>
                     </div>
                     <div class="botoes-acao">
-                        <button type="submit" class="botao-salvar">Salvar Professor</button>
-                        <button type="button" id="botaoCancelar" class="botao-sair" style="display: none;">Cancelar</button>
+                        <button type="button" id="btn_avancar_professor" class="botao-salvar">Salvar Professor</button>
+                        <button type="button" id="botaoCancelar" class="botao-sair">Cancelar</button>
+                        
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <script>
+    <script src="javascript/cadastro_professor.js">/*
         let professores = [];
 
         const ADMIN_USER = "admin";
@@ -378,23 +350,24 @@
             e.preventDefault();
 
             const id = document.getElementById('professorId').value;
-            const nome = document.getElementById('nomeProfessor').value;
-            const sobrenome = document.getElementById('sobrenomeProfessor').value;
-            const email = document.getElementById('emailProfessor').value;
+            const nome = document.getElementById('nome_professor').value;
+            const sobrenome = document.getElementById('sobrenome_professor').value;
+            const email = document.getElementById('email_professor').value;
             const telefone = document.getElementById('telefoneProfessor').value;
-            const cpf = document.getElementById('cpfProfessor').value;
+            const cpf = document.getElementById('cpf_professor').value;
             const disciplina = document.getElementById('disciplinaProfessor').value;
             const formacao = document.getElementById('formacaoProfessor').value;
+            const senha = document.getElementById('password_professor').value;
 
             if (editandoProfessor) {
                 const index = professores.findIndex(p => p.id === parseInt(id));
                 if (index !== -1) {
-                    professores[index] = { id: parseInt(id), nome, sobrenome, email, telefone, cpf, disciplina, formacao };
+                    professores[index] = { id: parseInt(id), nome, sobrenome, email, telefone, cpf, disciplina, formacao, senha };
                     mostrarMensagem('Professor atualizado com sucesso!');
                 }
             } else {
                 const novoId = professores.length > 0 ? Math.max(...professores.map(p => p.id)) + 1 : 1;
-                professores.push({ id: novoId, nome, sobrenome, email, telefone, cpf, disciplina, formacao });
+                professores.push({ id: novoId, nome, sobrenome, email, telefone, cpf, disciplina, formacao, senha });
                 mostrarMensagem('Professor adicionado com sucesso!');
             }
 
@@ -412,13 +385,14 @@
 
             if (professor) {
                 document.getElementById('professorId').value = professor.id;
-                document.getElementById('nomeProfessor').value = professor.nome;
-                document.getElementById('sobrenomeProfessor').value = professor.sobrenome;
-                document.getElementById('emailProfessor').value = professor.email;
+                document.getElementById('nome_professor').value = professor.nome;
+                document.getElementById('sobrenome_professor').value = professor.sobrenome;
+                document.getElementById('email_professor').value = professor.email;
                 document.getElementById('telefoneProfessor').value = professor.telefone;
-                document.getElementById('cpfProfessor').value = professor.cpf;
+                document.getElementById('cpf_professor').value = professor.cpf;
                 document.getElementById('disciplinaProfessor').value = professor.disciplina;
                 document.getElementById('formacaoProfessor').value = professor.formacao;
+                document.getElementById('password_professor').value = professor.senha;
 
                 editandoProfessor = true;
                 professorEditandoId = id;
@@ -453,7 +427,7 @@
             mensagemSucesso.textContent = mensagem;
             mensagemSucesso.style.display = 'block';
             setTimeout(() => mensagemSucesso.style.display = 'none', 3000);
-        }
+        }*/
     </script>
 </body>
 </html>

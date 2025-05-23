@@ -1,65 +1,149 @@
+<!DOCTYPE html>
 <html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../CSS/style.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <title>Sucelso Academy</title>
-  <style>
 
-  </style>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minerva's Academy | Cursos de Programação Online</title>
+  <link rel="icon" href="../public/IMG/icon02.ico" type="image/png" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../public/Css/index.css">
+
 </head>
-<header>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand navbarra-name" href="#">Sucelso Academy</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <a class="navbar-brand" href="#">Minerva's Academy</a>
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="#inicio">INICIO</a></li>
-          <li class="nav-item"><a class="nav-link" href="#apresentacao">APRESENTAÇÃO</a></li>
-          <li class="nav-item"><a class="nav-link" href="#cursos">CURSOS</a></li>
-          <li class="nav-item"><a class="nav-link" href="#planos">PLANOS</a></li>
+          <li class="nav-item"><a class="nav-link" href="#inicio">Início</a></li>
+          <li class="nav-item"><a class="nav-link" href="#apresentacao">Apresentação</a></li>
+          <li class="nav-item"><a class="nav-link" href="#cursos">Cursos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#planos">Planos</a></li>
         </ul>
-        <button class="btn btn-outline-light ms-3" onclick="window.location.href='login.html'">LOGIN</button>
-        <button class="btn btn-light ms-2" onclick="window.location.href='cadastro.html'">CADASTRO</button>
+        <button class="btn btn-outline-light ms-3" onclick="location.href='login.html'">Login</button>
+        <button class="btn btn-light ms-2" onclick="location.href='cadastro.html'">Cadastro</button>
       </div>
     </div>
   </nav>
-</header>
-<body>
+
+  <!-- Seção Hero -->
   <section id="inicio" class="hero-section">
-    <div class="container">
-      <h2 class="section-title"></h2>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio nisi facilis dolore provident autem corrupti voluptatibus modi. Vero odio non inventore perferendis quis repudiandae dolor itaque, asperiores eum, dolorum unde.</p>
+    <div class="container text-center">
+      <h2 class="section-title" style="color: rgb(255, 255, 255);">Bem-vindo à Minerva's Academy</h2>
+      <b>
+        <p class="lead fs-5" style="color: rgb(255, 255, 255);">Transforme sua paixão por tecnologia em uma carreira de
+          sucesso com nossos cursos de programação 100% online.</p>
+      </b>
+      <b>
+        <p style="color: rgb(255, 255, 255);">Aprenda no seu ritmo, com suporte, certificação e uma comunidade incrível.
+        </p>
+      </b>
+      <a href="#cursos" class="btn btn-primary btn-lg">Quero Começar</a>
     </div>
   </section>
-  <section id="apresentacao" class="hero-section">
+
+  <!-- Apresentação -->
+  <section id="apresentacao" class="py-5 bg-light text-center">
     <div class="container">
-      <h2 class="section-title"></h2>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel delectus ipsa accusamus voluptatibus libero, dolores distinctio in dicta maxime ex vero quasi quos, doloremque, eaque facilis eius numquam possimus vitae!</p>
+      <h2 class="section-title">Nossa Metodologia</h2>
+      <p class="lead">Aqui você aprende de verdade:</p>
+      <ul class="list-unstyled fs-5">
+        <li>✅ Vídeo aulas práticas e objetivas</li>
+        <li>✅ Plataforma intuitiva com exercícios e projetos</li>
+        <li>✅ Suporte para tirar dúvidas</li>
+        <li>✅ Certificados reconhecidos</li>
+      </ul>
     </div>
   </section>
-  <section id="cursos" class="py-5 text-center bg-light">
+
+  <!-- Cursos -->
+  <section id="cursos" class="py-5 text-center">
     <div class="container">
-      <h2 class="section-title"></h2>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel delectus ipsa accusamus voluptatibus libero, dolores distinctio in dicta maxime ex vero quasi quos, doloremque, eaque facilis eius numquam possimus vitae!</p>
+      <h2 class="section-title">Nossos Cursos</h2>
+      <p class="lead">Do zero ao avançado: escolha seu caminho na programação.</p>
+      <p>HTML, CSS, JavaScript, React, Python, Java, Banco de Dados, e muito mais.</p>
     </div>
   </section>
-  <section id="planos" class="py-5 text-center" >
+
+  <!-- Planos -->
+  <section id="planos" class="py-5">
     <div class="container">
-      <h2 class="section-title"></h2>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel delectus ipsa accusamus voluptatibus libero, dolores distinctio in dicta maxime ex vero quasi quos, doloremque, eaque facilis eius numquam possimus vitae!</p>
-      <button class="btn btn-primary" onclick="window.location.href='cadastro.html'">Cadastre-se</button>
+      <h2 class="section-title text-center mb-5">Plano Básico</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="plan-card basic">
+            <div class="plan-header">
+              <h3>Plano Básico</h3>
+              <div class="plan-price">R$1,500.00/mês</div>
+            </div>
+            <div class="plan-features">
+              <ul>
+                <li>Apostilas online</li>
+                <li>Acesso a grupos exclusivos do Whatsapp</li>
+                <li>Suporte por email</li>
+                <li>Rotina de exercícios</li>
+              </ul>
+              <button class="btn btn-outline-secondary w-100 mt-3">Assinar</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="plan-card medium">
+            <div class="plan-header">
+              <h3>Plano Empreendedor</h3>
+              <div class="plan-price">R$2,000.00/mês</div>
+            </div>
+            <div class="plan-features">
+              <ul>
+                <li>Apostilas</li>
+                <li>Mentoria individual com especialistas</li>
+                <li>Acesso a eventos exclusivos</li>
+                <li>Cursos de capacitação gratuitos</li>
+              </ul>
+              <button class="btn btn-primary w-100 mt-3">Assinar</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="plan-card premium">
+            <div class="plan-header">
+              <h3>Plano Startup</h3>
+              <div class="plan-price">R$3,000.00/mês</div>
+            </div>
+            <div class="plan-features">
+              <ul>
+                <li>Acesso total a todos os cursos</li>
+                <li>Mentoria individual com especialistas</li>
+                <li>Cursos de capacitação gratuitos</li>
+                <li>Participação em eventos exclusivos</li>
+                <li>Participação de modelegem de negócios</li>
+                
+              </ul>
+              <button class="btn btn-danger w-100 mt-3">Assinar</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
+
+  <!-- Rodapé -->
+  <footer>
+    <div class="container text-center">
+      <p class="mb-1">📧 Email: contato@minervasacademy.com</p>
+      <p>📞 Telefone: (71) 98888-6969</p>
+      <p>&copy; 2025 Minerva's Academy. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-<footer>
-  <section id="contatos" class="contatos geral">
-    <div class="container">
-    </div>
-  </section>
-</footer>
+
 </html>

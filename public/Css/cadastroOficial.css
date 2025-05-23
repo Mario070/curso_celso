@@ -1,0 +1,248 @@
+/* Reset e configurações básicas */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 1rem 2rem;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: #ecf0f1;
+}
+
+/* Formulário de cadastro */
+.cadastro {
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 500px;
+    border: 2px solid #2c3e50;
+    gap: 10px;
+}
+
+.cadastro h1 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    text-align: center;
+    font-weight: 600;
+    border: #2c3e50 solid;
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.cadastro input, #dados_cartao input {
+    padding: 5px;
+    width: 400px;
+    height: 30px;
+    margin: 0 auto;
+    border: #2c3e50 1px solid;
+    border-radius: 8px;
+}
+
+.cadastro input:hover {
+    border: #2c3e50 solid;
+}
+
+#btn_avancar, #btn_concluir {
+    position: relative;
+    color: #2c3e50;
+    font-weight: bold;
+    background-color: #ddd;
+    border-radius: 12px;
+    padding: 5px;
+    width: 70px;
+}
+
+#btn_avancar:hover, #btn_concluir:hover {
+    cursor: pointer;
+    background-color: #2c3e50;
+    color: #e0e0e0;
+}
+
+.grupo-formulario {
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.grupo-formulario label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #2c3e50;
+    border-radius: 5px;
+}
+
+#seletor-aluno {
+    display: none;
+}
+
+.controle-formulario.invalido {
+    border-color: #e74c3c;
+}
+
+.mensagem-erro {
+    color: #e74c3c;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    display: none;
+}
+
+#planos-container{
+     margin: 10px auto;
+    display: flexbox;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 500px;
+}
+
+/* Seção de pagamentos */
+.pagamentos {
+    display: none;
+    background-color: white;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 500px;
+    margin: 2rem auto;
+    border: 2px solid #2c3e50;
+}
+
+.pagamentos h2 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.metodos-pagamento {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.metodo-pagamento {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+.metodo-pagamento input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+#dados_cartao {
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 1rem;
+}
+
+#dados_cartao label {
+    font-weight: bold;
+}
+
+#dados_cartao select {
+    background-color: white;
+    padding: 5px;
+}
+
+#pix_janela {
+    display: none;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 600px;
+    height: auto;
+    max-height: 80vh;
+    background: #fff;
+    border: 2px solid #ccc;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    z-index: 1000;
+    padding: 20px;
+}
+
+#fechar_pix {
+    float: right;
+    margin: 5px;
+    cursor: pointer;
+}
+
+#jatem {
+    margin: 0 auto;
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 40px;
+}
+
+#jatem a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+#jatem a:hover {
+    text-decoration: underline;
+}
+
+/* Rodapé */
+footer {
+    background-color: #2c3e50;
+    color: #bdc3c7;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    margin-top: auto;
+}
+
+/* Responsividade */
+@media (max-width: 576px) {
+    .cadastro, .pagamentos {
+        padding: 1.5rem;
+        width: 95%;
+    }
+
+    .cadastro input, #dados_cartao input {
+        width: 100%;
+    }
+
+    .metodos-pagamento {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    #pix_janela {
+        width: 95%;
+        top: 10%;
+    }
+}

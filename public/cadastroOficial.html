@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/Css/cadastroOficial.css">
+    <title>Cadastro</title>
+</head>
+<body>
+    <header>
+     <h1>Minerva's Academy</h1>
+    </header>
+
+    <div class="cadastro">
+    <h1>CADASTRE-SE</h1>
+    <form id="formCadastro">
+        <div class="grupo-formulario">
+            <input type="text" id="nome_cadastro" placeholder="Nome" required>
+            <span class="mensagem-erro" id="erro_nome"></span>
+        </div>
+        <div class="grupo-formulario">
+            <input type="text" id="sobrenome_cadastro" placeholder="Sobrenome" required>
+            <span class="mensagem-erro" id="erro_sobrenome"></span>
+        </div>
+        <div class="grupo-formulario">
+            <input type="email" id="email_cadastro" placeholder="E-mail" required>
+            <span class="mensagem-erro" id="erro_email"></span>
+        </div>
+        <div class="grupo-formulario">
+            <input type="text" id="cpf_cadastro" placeholder="CPF" maxlength="14" required>
+            <span class="mensagem-erro" id="erro_cpf"></span>
+        </div>
+        <div class="grupo-formulario">
+            <input type="password" id="password_cadastro" placeholder="Senha" required minlength="6">
+            <span class="mensagem-erro" id="erro_senha"></span>
+        </div>
+
+        <div id="seletor-aluno" style="display: none;">
+            <label for="tipo_cadastro"><br>Tipo de cadastro</label>
+            <select name="tipo_cadastro" id="tipo_cadastro" required>
+                <option value="aluno" selected>Aluno</option>
+            </select>
+        </div>
+
+        <button type="submit" id="btn_avancar">Avançar</button>
+    </form>
+</div>
+
+<script>
+    // Máscara para CPF (formato: 000.000.000-00)
+    document.getElementById('cpf_cadastro').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        
+        if (value.length > 3 && value.length <= 6) {
+            value = value.replace(/(\d{3})(\d)/, '$1.$2');
+        } else if (value.length > 6 && value.length <= 9) {
+            value = value.replace(/(\d{3})(\d{3})(\d)/, '$1.$2.$3');
+        } else if (value.length > 9) {
+            value = value.replace(/(\d{3})(\d{3})(\d{3})(\d)/, '$1.$2.$3-$4');
+        }
+        
+        e.target.value = value;
+        
+        // Validação básica de CPF (apenas tamanho)
+        const erroCPF = document.getElementById('erro_cpf');
+        if (value.length < 14 && value.length > 0) {
+            erroCPF.textContent = 'CPF incompleto';
+            erroCPF.style.display = 'block';
+        } else {
+            erroCPF.style.display = 'none';
+        }
+    });
+
+    // Validação de formulário
+    document.getElementById('formCadastro').addEventListener('submit', function(e) {
+        e.preventDefault();
+        let isValid = true;
+
+        // Validar campos obrigatórios
+        const campos = [
+            {id: 'nome_cadastro', erro: 'erro_nome', msg: 'Nome é obrigatório'},
+            {id: 'sobrenome_cadastro', erro: 'erro_sobrenome', msg: 'Sobrenome é obrigatório'},
+            {id: 'email_cadastro', erro: 'erro_email', msg: 'E-mail inválido'},
+            {id: 'cpf_cadastro', erro: 'erro_cpf', msg: 'CPF incompleto'},
+            {id: 'login_cadastro', erro: 'erro_login', msg: 'Usuário é obrigatório'},
+            {id: 'password_cadastro', erro: 'erro_senha', msg: 'Senha deve ter pelo menos 6 caracteres'}
+        ];
+
+        campos.forEach(campo => {
+            const element = document.getElementById(campo.id);
+            const erroElement = document.getElementById(campo.erro);
+            
+            // Verifica se está vazio
+            if (!element.value.trim()) {
+                element.classList.add('invalido');
+                erroElement.textContent = campo.msg;
+                erroElement.style.display = 'block';
+                isValid = false;
+                return;
+            }
+            
+            // Validações específicas
+            if (campo.id === 'email_cadastro') {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(element.value)) {
+                    element.classList.add('invalido');
+                    erroElement.textContent = campo.msg;
+                    erroElement.style.display = 'block';
+                    isValid = false;
+                    return;
+                }
+            }
+            
+            if (campo.id === 'cpf_cadastro' && element.value.length < 14) {
+                element.classList.add('invalido');
+                erroElement.textContent = campo.msg;
+                erroElement.style.display = 'block';
+                isValid = false;
+                return;
+            }
+            
+            if (campo.id === 'password_cadastro' && element.value.length < 6) {
+                element.classList.add('invalido');
+                erroElement.textContent = campo.msg;
+                erroElement.style.display = 'block';
+                isValid = false;
+                return;
+            }
+            
+            // Se passou nas validações
+            element.classList.remove('invalido');
+            erroElement.style.display = 'none';
+        });
+
+    });
+
+    // Se você tiver um campo CVV em outra parte do formulário:
+    // Máscara para CVV (apenas 3 números)
+    if (document.getElementById('cvv_cartao')) {
+        document.getElementById('cvv_cartao').addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/\D/g, '').slice(0, 3);
+        });
+    }
+</script>
+
+    <div id="planos-container">
+         <!-- preenchido dinamicamente  -->
+        </div>
+
+    <div class="pagamentos" id="pagamentos" style="display:none;">
+        <!-- MÉTODO DE PAGAMENTO -->
+        <h2>Escolha o método de pagamento:</h2>
+        <input type="checkbox" name="cartao_credito" id="cartao_credito">
+        <label for="cartao_credito">Cartão de crédito</label>
+
+        <input type="checkbox" name="boleto" id="boleto">
+        <label for="boleto">Boleto</label>
+
+        <input type="checkbox" name="pix" id="pix">
+        <label for="pix">PIX</label>
+
+        <!-- DADOS CARTÃO DE CRÉDITO -->
+        <div id="dados_cartao" style="display:none;">
+            <label for="titular_cartao">Insira o nome do titular do cartão</label>
+            <input type="text" id="titular_cartao" placeholder="Nome">
+            
+            <label for="numero_cartao">Insira o número do cartão</label>
+            <input type="text" id="numero_cartao" placeholder="Número">
+            
+            <label for="validade_cartao">Validade do cartão</label>
+            <input type="month" id="validade_cartao" placeholder="AAAA/MM">
+            
+            <label for="cvv_cartao">Insira o CVV do cartão</label>
+            <input type="number" id="cvv_cartao" placeholder="CVV">
+            <div id="parcelamento" style="display:none;">
+    <label for="parcelas">Parcelar em até:</label>
+    <select id="parcelas">
+        <option value="1">1x sem juros</option>
+        <option value="2">2x sem juros</option>
+        <option value="3">3x sem juros</option>
+        <option value="4">4x sem juros</option>
+        <option value="5">5x  s</option>
+        <option value="6">6x</option>
+        <option value="7">7x</option>
+        <option value="8">8x</option>
+        <option value="9">9x</option>
+        <option value="10">10x</option>
+        <option value="11">11x</option>
+        <option value="12">12x</option>
+    </select>
+</div>
+        </div>
+        <div id="pix_janela" style="display:none; position:relative; top:20%; left:50%; width:600px; height:600px; background:#fff; border:2px solid #ccc; box-shadow: 0 0 10px rgba(0,0,0,0.3); z-index:1000;">
+            <button id="fechar_pix" style="float:right; margin:5px;">X</button>
+            <iframe src="pix.html" style="width:100%; height:90%; border:none;"></iframe>
+        </div>
+        <!-- Outras seções como boleto ou pix podem ser criadas aqui -->
+        <script src="javascript/script_aluno.js"></script>
+        <button id="btn_concluir">Concluir</button>
+    </div>
+
+    <p id="jatem">Já possui uma conta?! Faça login <a href="login.html">aqui</a>!</p>
+
+    <footer>
+        <!-- Rodapé opcional -->
+    </footer>
+
+    <!-- Vincule o script externo -->
+   <script>
+       const usuarioId = localStorage.getItem('usuarioId');
+       const tipoUsuario = localStorage.getItem('tipoUsuario');
+   </script>
+</body>
+</html>
