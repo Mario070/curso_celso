@@ -111,7 +111,7 @@ function carregarCursos(professorId) {
     });
 }
 
-async function associarProfessorCurso(professorId, cursoId) {
+/*async function associarProfessorCurso(professorId, cursoId) {
     try {
         const response = await fetch(`http://localhost:3000/api/cursos-professor?professorId=${professorId}`);
         const cursos = await response.json();
@@ -146,3 +146,49 @@ async function associarProfessorCurso(professorId, cursoId) {
     }
 }
 
+*/
+
+async function associarProfessorCurso(professorId, cursoId) {
+    try {
+        const response = await fetch(`http://localhost:3000/api/cursos-professor?professorId=${professorId}`);
+        const data = await response.json();
+
+        // Extrair os cursos corretamente, seja direto (array) ou dentro de um objeto
+        let cursos = [];
+
+        if (Array.isArray(data)) {
+            cursos = data;
+        } else if (Array.isArray(data.cursosMinistrados)) {
+            cursos = data.cursosMinistrados;
+        } else {
+            cursos = data.cursosMinistrados || data; // fallback
+        }
+
+        // Garante que seja um array, mesmo que só tenha um curso
+        if (!Array.isArray(cursos)) {
+            cursos = [cursos];
+        }
+
+        const jaAssociado = cursos.some(curso => curso.id === cursoId);
+        if (jaAssociado) {
+            alert("Esse curso já foi associado ao professor.");
+            return;
+        }
+
+        const res = await fetch('http://localhost:3000/api/atribuir-cursos-professor', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ professorId, cursosIds: [cursoId] })
+        });
+
+        if (!res.ok) throw new Error("Erro ao associar curso.");
+
+        const resData = await res.json();
+        alert("Curso associado com sucesso!");
+        console.log("Professor atualizado:", resData.professor);
+
+    } catch (error) {
+        console.error("Erro ao associar curso:", error.message || error);
+        alert("Erro ao associar curso ao professor.");
+    }
+}

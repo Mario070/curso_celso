@@ -4,7 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema Acadêmico</title>
+    <link rel="stylesheet" href="Css/edicao_modulo.css">
     <style>
+/* ESTILOS GERAIS DO FORMULÁRIO */
+.formulario-compacto {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.formulario-compacto h1 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+.campo-formulario {
+    margin-bottom: 15px;
+}
+
+.campo-formulario label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #444;
+}
+
+.campo-formulario input[type="text"],
+.campo-formulario input[type="email"],
+.campo-formulario input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.opcao-cadastro {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.opcao-cadastro input {
+    margin-right: 8px;
+}
+
+.botoes-formulario {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-primario {
+    background-color: #2c3e50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    flex: 1;
+}
+
+.btn-secundario {
+    background-color: #e74c3c;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    flex: 1;
+}
+
+.btn-primario:hover {
+    background-color: #1a252f;
+}
+
+.btn-secundario:hover {
+    background-color: #c0392b;
+}
+
   .content-section {
   display: none;
 }
@@ -225,6 +310,7 @@
             width: 18px;
             height: 18px;
         }
+        
     </style>
 <head>
     <meta charset="UTF-8">
@@ -256,8 +342,12 @@
     <div class="container">
         <div class="tab-container">
             <div class="tab active" onclick="openTab('#professores')">Professores</div>
+             <div class="tab" onclick="openTab('#administrador')">Adminsitrador</div>
             <div class="tab" onclick="openTab('#cursos')">Cursos</div>
             <div class ="tab" onclick="openTab('#professorCurso')">Cadastrar professor ao curso</div>
+            <div  class="tab" onclick="openTab('#modulos')">Cadastrar Modulo</div>
+              <div  class="tab" onclick="openTab('#modulosCards')">Edição modulo</div>
+                <div class="tab" onclick="openTab('#editarUsuario')">Editar Usuário</div>
 
         </div>
 
@@ -398,8 +488,295 @@
     </div>
 </div>
 
+<div id="modulos" class="content-section">
+  <h3>Buscar Curso</h3>
+  <div class="linha-formulario">
+    <div class="campo-formulario">
+      <label for="buscaCursoModulo">Nome ou ID do Curso:</label>
+      <input type="text" id="buscaCursoModulo" placeholder="Digite nome ou ID" required />
+    </div>
+    <div class="campo-formulario" style="align-self:flex-end;">
+      <button type="button" onclick="buscarCursoModulo()">Buscar</button>
+    </div>
+  </div>
+
+  <!-- aqui já está exibindo os dados do curso -->
+  <div id="cursoModuloEncontrado" class="mensagem" style="display:none; margin-top:15px; padding:10px; border-radius:4px;"></div>
+
+  <!-- ============ A PARTIR DAQUI COLE TODO ESTE BLOCO ============ -->
+  <form id="formCadastroModulo" style="display:none; margin-top:20px;">
+    <h4>Adicionar Novo Módulo</h4>
+    
+    <!-- Título e ordem do módulo -->
+    <div class="linha-formulario">
+      <div class="campo-formulario">
+        <label for="tituloNovoModulo">Título do Módulo:</label>
+        <input type="text" id="tituloNovoModulo" required />
+      </div>
+      <div class="campo-formulario">
+        <label for="ordemNovoModulo">Ordem:</label>
+        <input type="number" id="ordemNovoModulo" value="1" min="1" required />
+      </div>
     </div>
 
+    <!-- Apostilas -->
+    <h5>Apostilas</h5>
+    <div class="linha-formulario">
+      <div class="campo-formulario">
+        <input type="text" id="linkApostila" placeholder="Link da apostila" />
+      </div>
+      <div class="campo-formulario">
+        <input type="text" id="nomeApostilaNovo" placeholder="Nome da apostila" />
+      </div>
+      <div class="campo-formulario" style="align-self:flex-end;">
+        <button type="button" onclick="adicionarApostila()">Adicionar Apostila</button>
+      </div>
+    </div>
+    <table id="tabelaApostilasModulo" style="width:100%; margin-bottom:15px;">
+      <thead><tr><th>Link</th><th>Nome</th><th>Ação</th></tr></thead>
+      <tbody></tbody>
+    </table>
+
+    <!-- Avaliações -->
+    <h5>Avaliações</h5>
+    <div class="linha-formulario">
+      <div class="campo-formulario">
+        <input type="text" id="linkAvaliacaoNovo" placeholder="Link da avaliação" />
+      </div>
+      <div class="campo-formulario">
+        <input type="text" id="nomeAvaliacaoNovo" placeholder="Título da avaliação" />
+      </div>
+      <div class="campo-formulario" style="align-self:flex-end;">
+        <button type="button" onclick="adicionarAvaliacao()">Adicionar Avaliação</button>
+      </div>
+    </div>
+    <table id="tabelaAvaliacoesModulo" style="width:100%; margin-bottom:15px;">
+      <thead><tr><th>Link</th><th>Título</th><th>Ação</th></tr></thead>
+      <tbody></tbody>
+    </table>
+
+    <!-- Vídeos -->
+    <h5>Vídeos</h5>
+    <div class="linha-formulario">
+      <div class="campo-formulario">
+        <input type="text" id="linkVideoNovo" placeholder="Link do vídeo" />
+      </div>
+      <div class="campo-formulario">
+        <input type="text" id="tituloVideoNovo" placeholder="Título do vídeo" />
+      </div>
+      <div class="campo-formulario">
+        <input type="time" id="tempoVideoNovo" step="1" />
+      </div>
+      <div class="campo-formulario" style="align-self:flex-end;">
+        <button type="button" onclick="adicionarVideoModulo()">Adicionar Vídeo</button>
+      </div>
+    </div>
+    <table id="tabelaVideosModulo" style="width:100%; margin-bottom:15px;">
+      <thead><tr><th>Link</th><th>Título</th><th>Duração</th><th>Ação</th></tr></thead>
+      <tbody></tbody>
+    </table>
+
+    <!-- Botão de salvar módulo -->
+    <div class="botoes-acao">
+      <button type="button" class="btn-submit" onclick="salvarNovoModulo()">Salvar Módulo</button>
+    </div>
+  </form>
+  <!-- ================= FIM DO BLOCO A SER COLADO ================ -->
+
+</div>
+<div id="modulosCards" class="content-section">
+  <h3>Buscar Curso e Exibir Módulos</h3>
+
+  <!-- 1) Busca do curso -->
+  <div class="linha-formulario">
+    <div class="campo-formulario">
+      <label for="buscaCursoCards">Nome ou ID do Curso:</label>
+      <input type="text" id="buscaCursoCards" placeholder="Digite nome ou ID" required />
+    </div>
+    <div class="campo-formulario" style="align-self:flex-end;">
+      <button type="button" onclick="buscarCursoECarregarModulos()">Buscar</button>
+    </div>
+  </div>
+
+  <div id="mensagemCursoCards" class="mensagem" style="display:none; margin-top:15px; padding:10px; border-radius:4px;"></div>
+
+  <!-- 2) Container de cards (inicialmente oculto) -->
+  <div id="cardsModulosContainer" style="display:none; margin-top:20px;">
+    <h4>Módulos do Curso</h4>
+    <div id="listaCardsModulos" style="display:flex; flex-wrap:wrap; gap:16px;"></div>
+  </div>
+
+  <!-- 3) Formulário de Edição Inline -->
+ <div id="formEditarModulo" style="display: none;">
+  <h4>Detalhes do Módulo</h4>
+  
+  <input type="hidden" id="editarModuloId">
+  
+  <div class="form-group">
+    <label>Título:</label>
+    <input type="text" id="editarTituloModulo" readonly>
+  </div>
+  
+  <div class="form-group">
+    <label>Ordem:</label>
+    <input type="number" id="editarOrdemModulo" readonly>
+  </div>
+  
+  <h5>Vídeo</h5>
+  <div class="form-group">
+    <label>Título:</label>
+    <input type="text" id="editarTituloVideo" readonly>
+  </div>
+  
+  <div class="form-group">
+    <label>Link:</label>
+    <input type="text" id="editarLinkVideo" readonly>
+  </div>
+  
+  <div class="form-group">
+    <label>Duração (min):</label>
+    <input type="number" id="editarDuracaoVideo" readonly>
+  </div>
+  
+  <h5>Apostila</h5>
+  <div class="form-group">
+    <label>Título:</label>
+    <input type="text" id="editarTituloApostila" readonly>
+  </div>
+  
+  <div class="form-group">
+    <label>Link:</label>
+    <input type="text" id="editarLinkApostila" readonly>
+  </div>
+  
+  <h5>Avaliação</h5>
+  <div class="form-group">
+    <label>Título:</label>
+    <input type="text" id="editarTituloAvaliacao" readonly>
+  </div>
+  
+  <div class="form-group">
+    <label>Link:</label>
+    <input type="text" id="editarLinkAvaliacao" readonly>
+  </div>
+  
+  <div class="form-buttons">
+    <button id="btnEditar" onclick="alternarModoEdicao(true)">Editar</button>
+    <button id="btnSalvar" onclick="salvarEdicao()" style="display: none;">Salvar</button>
+    <button id="btnCancelar" onclick="alternarModoEdicao(false)" style="display: none;">Cancelar</button>
+    <button onclick="fecharFormulario()">Fechar</button>
+  </div>
+</div>
+</div>
+</div>
+
+
+
+<!-- Editar Usuário -->
+<div id="editarUsuario" class="content-section">
+    <h2>Editar Usuário</h2>
+
+    <!-- Campo de busca -->
+    <div class="campo-formulario">
+        <label for="buscaUsuario">Buscar Email:</label>
+        <input type="text" id="buscaUsuario" placeholder="Digite o nome ou ID do usuário" />
+        <button onclick="buscarUsuario()">Buscar</button>
+    </div>
+
+    <!-- Resultado da busca e formulário de edição -->
+    <form id="formEditarUsuario" style="display:none; margin-top:20px;">
+        <input type="hidden" id="usuarioIdEdit" />
+
+        <div class="linha-formulario">
+            <div class="campo-formulario">
+                <label for="nomeUsuarioEdit">Nome:</label>
+                <input type="text" id="nomeUsuarioEdit" required />
+            </div>
+            <div class="campo-formulario">
+                <label for="sobrenomeUsuarioEdit">Sobrenome:</label>
+                <input type="text" id="sobrenomeUsuarioEdit" required />
+            </div>
+        </div>
+        <div class="linha-formulario">
+    <div class="campo-formulario">
+        <label for="tipoUsuarioEdit">Tipo de Usuário:</label>
+        <select id="tipoUsuarioEdit" required>
+            <option value="">Selecione</option>
+            <option value="aluno">Aluno</option>
+            <option value="admin">Admin</option>
+            <option value="professor">Professor</option>
+        </select>
+    </div>
+</div>
+
+        <div class="linha-formulario">
+            <div class="campo-formulario">
+                <label for="emailUsuarioEdit">Email:</label>
+                <input type="email" id="emailUsuarioEdit" required />
+            </div>
+            <div class="campo-formulario">
+                <label for="cpfUsuarioEdit">CPF:</label>
+                <input type="text" id="cpfUsuarioEdit" required />
+            </div>
+
+        </div>
+
+        <!-- Senha propositalmente ausente para não ser editável -->
+
+        <div class="botoes-acao">
+             <button type="button" id="btnEditar" onclick="ativarEdicao()">Editar</button>
+            <button type="button" onclick="salvarEdicaoUsuario()">Salvar Alterações</button>
+            <button type="button" onclick="cancelarEdicaoUsuario()">Cancelar</button>
+        </div>
+    </form>
+
+    <!-- Mensagem -->
+    <div id="mensagemEditarUsuario" class="mensagem"></div>
+</div>
+
+
+<!-- Professores -->
+      <div id="administrador" class="content-section">
+    <h3>Adicionar Novo Administrador</h3>
+    <form id="formularioAdministrador" class="formulario-vertical">
+        <div class="campo-formulario">
+            <label for="nome_administrador"><strong>Nome:</strong></label>
+            <input type="text" id="nome_administrador" required>
+        </div>
+        
+        <div class="campo-formulario">
+            <label for="sobrenome_administrador"><strong>Sobrenome:</strong></label>
+            <input type="text" id="sobrenome_administrador" required>
+        </div>
+        
+        <div class="campo-formulario">
+            <label><strong>Tipo de cadastro</strong></label>
+            <select id="tipo_cadastro_adm" class="select-cadastro">
+                <option value="admin">Administrador</option>
+            </select>
+        </div>
+        
+        <div class="campo-formulario">
+            <label for="email_administrador"><strong>Email:</strong></label>
+            <input type="email" id="email_administrador" required>
+        </div>
+        
+        <div class="campo-formulario">
+            <label for="password_administrador"><strong>Senha:</strong></label>
+            <input type="password" id="password_administrador" required>
+        </div>
+        
+        <div class="campo-formulario">
+            <label for="cpf_administrador"><strong>CPF:</strong></label>
+            <input type="text" id="cpf_administrador" required>
+        </div>
+        
+        <div class="botoes-acao">
+            <button type="submit" id="btn_avancar_administrador" class="btn-salvar">Salvar Administrador</button>
+            <button type="button" id="botaoCancelarAdm" class="btn-cancelar">Cancelar</button>
+        </div>
+    </form>
+</div>
     <script>
         // Recupera dados do localStorage
         const usuarioId = localStorage.getItem('usuarioId');
@@ -419,7 +796,9 @@
             if (targetSection) targetSection.style.display = 'block';
         }*/
 
-     function openTab(selector) {
+
+
+     /*function openTab(selector) {
   // Remove a classe active de todas as tabs
   document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
 
@@ -433,9 +812,50 @@
   // Mostra a seção correspondente
   const content = document.querySelector(selector);
   if (content) content.classList.add('active');
+}*/
+
+
+
+function openTab(tabId) {
+    // Remove a classe 'active' de todas as abas e conteúdos
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    
+    document.querySelectorAll('.content-section').forEach(content => {
+        content.classList.remove('active');
+    });
+
+    // Adiciona a classe 'active' na aba e conteúdo selecionados
+    const tabElement = document.querySelector(`.tab[onclick="openTab('${tabId}')"]`);
+    if (tabElement) {
+        tabElement.classList.add('active');
+    }
+    
+    const contentElement = document.querySelector(tabId);
+    if (contentElement) {
+        contentElement.classList.add('active');
+    }
 }
 
+// Ativa a primeira aba ao carregar a página
+document.addEventListener('DOMContentLoaded', function() {
+    openTab('#professores');
+});
 
+/*function openTab(tabId) {
+    // Esconde todas as seções
+    const sections = document.querySelectorAll('.content-section');
+    sections.forEach(section => section.style.display = 'none');
+
+    // Remove destaque das abas
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => tab.classList.remove('active'));
+
+    // Mostra a aba clicada
+    document.querySelector(tabId).style.display = 'block';
+    event.currentTarget.classList.add('active');
+}*/
 
     </script>
 
@@ -443,5 +863,9 @@
     <script src="javascript/cadastro_professor.js"></script>
     <script src="javascript/script.js"></script>
    <script src="javascript/cadastro_curso_professor.js"></script>
+   <script src="javascript/busar_curso.js"></script>
+   <script src="javascript/edicao_modulo.js"></script>
+   <script src="javascript/cadastro_admin.js"></script>
+   <script src="javascript/buscar_editar_usuario.js"></script>
 </body>
 </html>

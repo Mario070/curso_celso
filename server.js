@@ -291,13 +291,12 @@ app.get('/api/valor-plano/:planoId', async (req, res) => {
     }
 });
 
-/*app.post('/api/salvar-usuario', async (req, res) => {
+app.post('/api/salvar-usuario', async (req, res) => {
     const {
         nome,
         sobrenome,
         email,
         cpf,
-        login,
         senha,
         tipo,
         planoId,
@@ -323,15 +322,22 @@ app.get('/api/valor-plano/:planoId', async (req, res) => {
 
         const nomeCompleto = `${nome} ${sobrenome}`;
 
+        function limparCPF(cpf) {
+            if (!cpf) return null;
+            return cpf.replace(/\D/g, '');
+        }
+
+        const cpfLimpo = limparCPF(cpf);
+
         const dadosUsuario = {
             nome: nomeCompleto,
             email: email,
-            senha: senha, // em produção, usar bcrypt
-            cpf: cpf,
+            senha: senha, // em produção, use hash com bcrypt
+            cpf: cpfLimpo,
             tipo: tipo,
         };
 
-        if (tipo !== "professor") {
+        if (tipo !== "professor" && tipo !== "admin") {
             dadosUsuario.planoId = planoId;
         }
 
@@ -341,8 +347,8 @@ app.get('/api/valor-plano/:planoId', async (req, res) => {
 
         console.log("Usuário criado com sucesso:", novoUsuario);
 
-        // SALVAR FORMA DE PAGAMENTO SE NÃO FOR PROFESSOR
-        if (tipo !== "professor") {
+        // SALVAR FORMA DE PAGAMENTO apenas se NÃO for admin e NÃO for professor
+        if (tipo !== "admin" && tipo !== "professor") {
             console.log("Forma de pagamento:", formaPagamento);
             console.log("Dados do cartão:", dadosCartao);
 
@@ -381,9 +387,25 @@ app.get('/api/valor-plano/:planoId', async (req, res) => {
             }
         }
 
+        let cursosProfessor = [];
+
+        if (tipo === "professor") {
+            const professorComCursos = await prisma.usuario.findUnique({
+                where: { id: novoUsuario.id },
+                include: {
+                    cursosMinistrados: true
+                }
+            });
+
+            if (professorComCursos) {
+                cursosProfessor = professorComCursos.cursosMinistrados;
+            }
+        }
+
         res.status(200).json({
             message: "Usuário e forma de pagamento salvos com sucesso!",
-            usuarioId: novoUsuario.id
+            usuarioId: novoUsuario.id,
+            cursos: cursosProfessor,
         });
 
     } catch (error) {
@@ -393,10 +415,10 @@ app.get('/api/valor-plano/:planoId', async (req, res) => {
             detalhes: error.message || "Erro interno"
         });
     }
-});*/
+});
 
 
-app.post('/api/salvar-usuario', async (req, res) => {
+/*app.post('/api/salvar-usuario', async (req, res) => {
   
     const {
         nome,
@@ -442,7 +464,7 @@ const cpfLimpo = limparCPF(cpf);
             tipo: tipo,
         };
 
-        if (tipo !== "professor") {
+        if (tipo !== "professor" && tipo!== "admin") {
             dadosUsuario.planoId = planoId;
         }
 
@@ -521,7 +543,7 @@ const cpfLimpo = limparCPF(cpf);
             detalhes: error.message || "Erro interno"
         });
     }
-});
+});*/
 
 app.get('/api/buscar-professor', async (req, res) => {
   console.log("Rota /api/buscar-professor foi chamada");
@@ -572,7 +594,7 @@ app.get('/api/cursos-professor/:id', async (req, res) => {
   }
 });
 
-fetch("http://localhost:3000/api/plano")
+/*fetch("http://localhost:3000/api/plano")
   .then(response => response.json())
   .then(data => {
     console.log('Planos recebidos:', data);
@@ -580,32 +602,9 @@ fetch("http://localhost:3000/api/plano")
   })
   .catch(error => {
     console.error("Erro ao buscar planos:", error);
-  });
+  });*/
   
-  //para realizar login- post é uma forma segura
-/*app.post('/api/login', async (req, res) => {
-    const email = req.body.email.trim();
-    const senha = req.body.senha.trim();
-
-    try {
-        const usuario = await prisma.usuario.findUnique({
-            where: { email },
-        });
-
-        if (!usuario || usuario.senha.trim() !== senha) {
-            return res.status(401).json({ error: 'Email ou senha inválidos' });
-        }
-
-        res.status(200).json({ tipo: usuario.tipo });
-    } catch (error) {
-        console.error('Erro ao fazer login:', error);
-        res.status(500).json({ error: 'Erro interno do servidor' });
-    }
-});
-
-  app.get('/', (req, res) => {
-    res.redirect('/login.html');
-});*/
+ 
 app.post('/api/login', async (req, res) => {
     const email = req.body.email.trim();
     const senha = req.body.senha.trim();
@@ -654,6 +653,33 @@ app.post('/api/salvar-curso', async (req, res) => {
     res.status(500).json({ error: "Erro ao salvar o curso no banco de dados." });
   }
 });
+
+app.get('/api/cursos-professor/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const cursos = await prisma.curso.findMany({
+      where: {
+        cursosMinistrados: {
+          some: {
+            id: Number(id)
+          }
+        }
+      },
+      select: {
+        id: true,
+        titulo: true,
+        descricao: true,
+        cargaHoraria: true
+      }
+    });
+    res.json(cursos);
+  } catch (error) {
+    console.error('Erro ao buscar cursos do professor:', error);
+    res.status(500).json({ error: 'Erro ao buscar cursos do professor' });
+  }
+});
+
 
 app.post('/api/salvar-video', async (req, res) => {
   const { titulovideo, linkvideo, tempoVideo, moduloId } = req.body;
@@ -810,7 +836,7 @@ app.post('/api/atribuir-cursos-professor', async (req, res) => {
 
 
 // Exemplo: GET /api/cursos-professor?professorId=5
-app.get('/api/cursos-professor', async (req, res) => {
+/*app.get('/api/cursos-professor', async (req, res) => {
     const professorId = Number(req.query.professorId);
     if (!professorId) {
         return res.status(400).json({ error: 'ID do professor não informado.' });
@@ -839,6 +865,33 @@ app.get('/api/cursos-professor', async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: 'Erro ao buscar cursos do professor.' });
     }
+});*/
+
+// Exemplo usando Express e Prisma
+app.get('/api/cursos-professor', async (req, res) => {
+  const { professorId } = req.query;
+
+  if (!professorId) {
+    return res.status(400).json({ error: 'ID do professor não fornecido.' });
+  }
+
+  try {
+    const professor = await prisma.usuario.findUnique({
+      where: { id: parseInt(professorId) },
+      include: {
+        cursosMinistrados: true, // campo definido no schema
+      },
+    });
+
+    if (!professor) {
+      return res.status(404).json({ error: 'Professor não encontrado.' });
+    }
+
+    res.json(professor.cursosMinistrados || []); // retornar array vazio se não houver
+  } catch (error) {
+    console.error('Erro ao buscar cursos do professor:', error);
+    res.status(500).json({ error: 'Erro interno ao buscar cursos do professor.' });
+  }
 });
 
 app.get('/api/modulos-curso/:id', async (req, res) => {
@@ -868,6 +921,678 @@ app.get('/api/modulos-curso/:id', async (req, res) => {
     console.error(err);
     res.status(500).json({ error: 'Erro ao buscar módulos' });
   }
+});
+
+app.get('/api/modulo', async (req, res) => {
+  const cursoId = parseInt(req.query.cursoId, 10);
+  if (isNaN(cursoId)) {
+    return res.status(400).json({ error: 'cursoId inválido' });
+  }
+  try {
+    const modulos = await prisma.modulo.findMany({
+      where: { cursoId },
+      select: {
+        id: true,
+        titulo: true,
+        ordem: true
+      }
+    });
+    res.json(modulos);
+  } catch (error) {
+    console.error('Erro ao buscar módulos:', error);
+    res.status(500).json({ error: 'Erro ao buscar módulos' });
+  }
+});
+
+// Exemplo de rota no backend (Node + Express + Prisma)
+app.get('/api/modulo/:id', async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+
+  try {
+    const modulo = await prisma.modulo.findUnique({
+      where: { id },
+      include: {
+        apostila: true,
+        video: true,
+        avaliacao: true,
+      },
+    });
+
+    if (!modulo) {
+      return res.status(404).json({ error: 'Módulo não encontrado' });
+    }
+
+    res.json(modulo);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Erro ao buscar módulo' });
+  }
+});
+
+app.delete('/api/modulo/:id', async (req, res) => {
+  const moduloid = parseInt(req.params.id, 10);
+  if (isNaN(moduloid)) {
+    return res.status(400).json({ error: 'ID de módulo inválido' });
+  }
+  try {
+    await prisma.modulo.delete({ where: { id: moduloid } });
+    res.status(200).json({ message: 'Módulo excluído com sucesso' });
+  } catch (error) {
+    console.error('Erro ao excluir módulo:', error);
+    res.status(500).json({ error: 'Erro ao excluir módulo' });
+  }
+});
+
+/*app.put('/api/modulo/:id', async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const { titulo, ordem } = req.body;
+  if (isNaN(id) || !titulo || ordem === undefined) {
+    return res.status(400).json({ error: 'Dados inválidos.' });
+  }
+  try {
+    const atualizado = await prisma.modulo.update({
+      where: { id },
+      data: { titulo, ordem: parseInt(ordem, 10) }
+    });
+    res.json(atualizado);
+  } catch (error) {
+    console.error('Erro ao atualizar módulo:', error);
+    res.status(500).json({ error: 'Falha na atualização.' });
+  }
+});*/
+
+
+/*app.put('/api/modulo/:id', async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  if (isNaN(id)) {
+    return res.status(400).json({ error: 'ID inválido' });
+  }
+
+  const {
+    titulo,
+    ordem,
+    videoTitulo,
+    videoLink,
+    videoDuracao,
+    apostilaTitulo,
+    apostilaLink,
+    avaliacaoTitulo,
+    avaliacaoLink
+  } = req.body;
+
+  try {
+    // Atualiza o módulo principal
+    const moduloAtualizado = await prisma.modulo.update({
+      where: { id },
+      data: {
+        titulo,
+        ordem,
+      }
+    });
+
+    // Atualiza o vídeo (assume-se que só há 1 por módulo)
+    await prisma.video.upsert({
+      where: { moduloId: id },
+      update: {
+        titulo: videoTitulo,
+        link: videoLink,
+        duracao: videoDuracao
+      },
+      create: {
+        moduloId: id,
+        titulo: videoTitulo,
+        link: videoLink,
+        duracao: videoDuracao
+      }
+    });
+
+    // Atualiza a apostila
+    await prisma.apostila.upsert({
+      where: { moduloId: id },
+      update: {
+        titulo: apostilaTitulo,
+        link: apostilaLink
+      },
+      create: {
+        moduloId: id,
+        titulo: apostilaTitulo,
+        link: apostilaLink
+      }
+    });
+
+    // Atualiza a avaliação
+    await prisma.avaliacao.upsert({
+      where: { moduloId: id },
+      update: {
+        titulo: avaliacaoTitulo,
+        link: avaliacaoLink
+      },
+      create: {
+        moduloId: id,
+        titulo: avaliacaoTitulo,
+        link: avaliacaoLink
+      }
+    });
+
+    res.json({ success: true, moduloAtualizado });
+
+  } catch (error) {
+    console.error('Erro ao atualizar módulo e relações:', error);
+    res.status(500).json({ error: 'Erro ao atualizar módulo e dados relacionados' });
+  }
+});*/
+
+// Rota para buscar módulos com relações
+app.get('/api/modulo', async (req, res) => {
+  const cursoId = parseInt(req.query.cursoId);
+  const includeRelations = req.query.includeRelations === 'true';
+
+  try {
+    let modulos;
+    
+    if (includeRelations) {
+      modulos = await prisma.modulo.findMany({
+        where: { cursoId },
+        include: {
+          video: true,
+          apostila: true,
+          avaliacao: true
+        }
+      });
+    } else {
+      modulos = await prisma.modulo.findMany({
+        where: { cursoId }
+      });
+    }
+
+    res.json(modulos);
+  } catch (error) {
+    console.error('Erro ao buscar módulos:', error);
+    res.status(500).json({ error: 'Erro ao buscar módulos' });
+  }
+});
+
+// Rota para buscar módulo completo
+app.get('/api/modulo-completo/:id', async (req, res) => {
+  const id = parseInt(req.params.id);
+
+  try {
+    const modulo = await prisma.modulo.findUnique({
+      where: { id },
+      include: {
+        video: true,
+        apostila: true,
+        avaliacao: true
+      }
+    });
+
+    if (!modulo) {
+      return res.status(404).json({ 
+        success: false,
+        error: 'Módulo não encontrado'
+      });
+    }
+
+    res.json({
+      success: true,
+      data: modulo
+    });
+  } catch (error) {
+    console.error('Erro ao buscar módulo:', error);
+    res.status(500).json({ 
+      success: false,
+      error: 'Erro interno no servidor'
+    });
+  }
+});
+
+// Rota para atualizar módulo e relações
+/*app.put('/api/modulo/:id', async (req, res) => {
+  const id = parseInt(req.params.id);
+  const { titulo, ordem, video, apostila, avaliacao } = req.body;
+
+  try {
+    // Inicia transação
+    const [moduloAtualizado] = await prisma.$transaction([
+      // Atualiza módulo
+      prisma.modulo.update({
+        where: { id },
+        data: { titulo, ordem }
+      }),
+      
+      // Atualiza/insere vídeo (se existir)
+      video?.titulo && prisma.video.upsert({
+        where: { moduloId: id },
+        update: {
+          titulo: video.titulo,
+          urlVideo: video.urlVideo,
+          duracao: video.duracao
+        },
+        create: {
+          moduloId: id,
+          titulo: video.titulo,
+          urlVideo: video.urlVideo,
+          duracao: video.duracao
+        }
+      }),
+      
+      // Atualiza/insere apostila (se existir)
+      apostila?.titulo && prisma.apostila.upsert({
+        where: { moduloId: id },
+        update: {
+          titulo: apostila.titulo,
+          arquivoUrl: apostila.arquivoUrl
+        },
+        create: {
+          moduloId: id,
+          titulo: apostila.titulo,
+          arquivoUrl: apostila.arquivoUrl
+        }
+      }),
+      
+      // Atualiza/insere avaliação (se existir)
+      avaliacao?.titulo && prisma.avaliacao.upsert({
+        where: { moduloId: id },
+        update: {
+          titulo: avaliacao.titulo,
+          url: avaliacao.url
+        },
+        create: {
+          moduloId: id,
+          titulo: avaliacao.titulo,
+          url: avaliacao.url
+        }
+      })
+    ].filter(Boolean)); // Remove operações nulas
+
+    res.json({ success: true, modulo: moduloAtualizado });
+  } catch (error) {
+    console.error('Erro ao atualizar módulo:', error);
+    res.status(500).json({ 
+      success: false,
+      error: 'Erro ao atualizar módulo'
+    });
+  }
+});
+
+app.put('/api/modulo/:id', async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  if (isNaN(id)) {
+    return res.status(400).json({ error: 'ID inválido' });
+  }
+
+  // Validação dos dados obrigatórios
+  if (!req.body.titulo || req.body.ordem === undefined) {
+    return res.status(400).json({ error: 'Título e ordem são obrigatórios' });
+  }
+
+  const {
+    titulo,
+    ordem,
+    videoTitulo = null,
+    videoLink = null,
+    videoDuracao = null,
+    apostilaTitulo = null,
+    apostilaLink = null,
+    avaliacaoTitulo = null,
+    avaliacaoLink = null
+  } = req.body;
+
+  try {
+    // Usando transaction para garantir atomicidade
+    const [moduloAtualizado] = await prisma.$transaction([
+      // Atualiza o módulo principal
+      prisma.modulo.update({
+        where: { id },
+        data: { titulo, ordem }
+      }),
+
+      // Atualiza/Cria o vídeo
+      prisma.video.upsert({
+        where: { moduloId: id },
+        update: { titulo: videoTitulo, link: videoLink, duracao: videoDuracao },
+        create: { moduloId: id, titulo: videoTitulo, link: videoLink, duracao: videoDuracao }
+      }),
+
+      // Atualiza/Cria a apostila
+      prisma.apostila.upsert({
+        where: { moduloId: id },
+        update: { titulo: apostilaTitulo, link: apostilaLink },
+        create: { moduloId: id, titulo: apostilaTitulo, link: apostilaLink }
+      }),
+
+      // Atualiza/Cria a avaliação
+      prisma.avaliacao.upsert({
+        where: { moduloId: id },
+        update: { titulo: avaliacaoTitulo, link: avaliacaoLink },
+        create: { moduloId: id, titulo: avaliacaoTitulo, link: avaliacaoLink }
+      })
+    ]);
+
+    // Busca o módulo atualizado com todas as relações
+    const moduloCompleto = await prisma.modulo.findUnique({
+      where: { id },
+      include: {
+        video: true,
+        apostila: true,
+        avaliacao: true
+      }
+    });
+
+    res.json({ 
+      success: true, 
+      modulo: moduloCompleto,
+      message: 'Módulo e recursos atualizados com sucesso' 
+    });
+
+  } catch (error) {
+    console.error('Erro ao atualizar módulo:', error);
+    
+    // Mensagens de erro mais específicas
+    if (error.code === 'P2025') {
+      return res.status(404).json({ error: 'Módulo não encontrado' });
+    }
+    
+    res.status(500).json({ 
+      error: 'Erro ao atualizar módulo',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
+  }
+});
+*/
+
+app.put('/api/modulo/:id', async (req, res) => {
+  const id = parseInt(req.params.id);
+  if (isNaN(id)) {
+    return res.status(400).json({ error: 'ID inválido' });
+  }
+
+  // Validação básica
+  if (!req.body.titulo || req.body.ordem === undefined) {
+    return res.status(400).json({ error: 'Título e ordem são obrigatórios' });
+  }
+
+  const { titulo, ordem } = req.body;
+
+  try {
+    // 1. Primeiro verifica se o módulo existe
+    const moduloExistente = await prisma.modulo.findUnique({
+      where: { id },
+      include: {
+        video: true,
+        apostila: true,
+        avaliacao: true
+      }
+    });
+
+    if (!moduloExistente) {
+      return res.status(404).json({ error: 'Módulo não encontrado' });
+    }
+
+    // 2. Atualiza apenas o módulo (operações relacionadas em endpoints separados)
+    const moduloAtualizado = await prisma.modulo.update({
+      where: { id },
+      data: { titulo, ordem },
+      include: {
+        video: true,
+        apostila: true,
+        avaliacao: true
+      }
+    });
+
+    res.json({
+      success: true,
+      data: moduloAtualizado,
+      message: 'Módulo atualizado com sucesso'
+    });
+
+  } catch (error) {
+    console.error('Erro ao atualizar módulo:', error);
+    
+    if (error.code === 'P2025') {
+      return res.status(404).json({ error: 'Módulo não encontrado' });
+    }
+    
+    res.status(500).json({ 
+      error: 'Erro interno no servidor',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
+  }
+});
+
+app.put('/api/modulo/:id/video', async (req, res) => {
+  const moduloId = parseInt(req.params.id);
+  const { titulo, urlVideo, duracao } = req.body;
+
+  try {
+    // Verifica se já existe vídeo para este módulo
+    const videoExistente = await prisma.video.findFirst({
+      where: { moduloId }
+    });
+
+    let video;
+    if (videoExistente) {
+      video = await prisma.video.update({
+        where: { id: videoExistente.id },
+        data: { titulo, urlVideo, duracao }
+      });
+    } else {
+      video = await prisma.video.create({
+        data: {
+          titulo,
+          urlVideo,
+          duracao,
+          moduloId
+        }
+      });
+    }
+
+    res.json(video);
+  } catch (error) {
+    console.error('Erro ao atualizar vídeo:', error);
+    res.status(500).json({ error: 'Erro ao atualizar vídeo' });
+  }
+});
+
+app.put('/api/modulo/:id/apostila', async (req, res) => {
+  const moduloId = parseInt(req.params.id);
+  const { titulo, arquivoUrl } = req.body;
+
+  try {
+    const apostilaExistente = await prisma.apostila.findFirst({
+      where: { moduloId }
+    });
+
+    let apostila;
+    if (apostilaExistente) {
+      apostila = await prisma.apostila.update({
+        where: { id: apostilaExistente.id },
+        data: { titulo, arquivoUrl }
+      });
+    } else {
+      apostila = await prisma.apostila.create({
+        data: {
+          titulo,
+          arquivoUrl,
+          moduloId
+        }
+      });
+    }
+
+    res.json(apostila);
+  } catch (error) {
+    console.error('Erro ao atualizar apostila:', error);
+    res.status(500).json({ error: 'Erro ao atualizar apostila' });
+  }
+});
+
+app.put('/api/modulo/:id/avaliacao', async (req, res) => {
+  const moduloId = parseInt(req.params.id);
+  const { titulo, url } = req.body;
+
+  try {
+    const avaliacaoExistente = await prisma.avaliacao.findFirst({
+      where: { moduloId }
+    });
+
+    let avaliacao;
+    if (avaliacaoExistente) {
+      avaliacao = await prisma.avaliacao.update({
+        where: { id: avaliacaoExistente.id },
+        data: { titulo, url }
+      });
+    } else {
+      avaliacao = await prisma.avaliacao.create({
+        data: {
+          titulo,
+          url,
+          moduloId
+        }
+      });
+    }
+
+    res.json(avaliacao);
+  } catch (error) {
+    console.error('Erro ao atualizar avaliação:', error);
+    res.status(500).json({ error: 'Erro ao atualizar avaliação' });
+  }
+});
+
+app.get('/api/modulo-completo/:id', async (req, res) => {
+  // Validação mais rigorosa do ID
+  const id = Number(req.params.id);
+  if (!Number.isInteger(id) || id <= 0) {
+    return res.status(400).json({ 
+      success: false,
+      error: 'ID inválido',
+      details: `O ID deve ser um número inteiro positivo. Recebido: ${req.params.id}`
+    });
+  }
+
+  try {
+    const modulo = await prisma.modulo.findUnique({
+      where: { id },
+      include: {
+        video: {
+          select: {
+            id: true,
+            titulo: true,
+            link: true,
+            duracao: true,
+            moduloId: true
+          }
+        },
+        apostila: {
+          select: {
+            id: true,
+            titulo: true,
+            link: true,
+            moduloId: true
+          }
+        },
+        avaliacao: {
+          select: {
+            id: true,
+            titulo: true,
+            link: true,
+            moduloId: true
+          }
+        }
+      }
+    });
+
+    if (!modulo) {
+      return res.status(404).json({ 
+        success: false,
+        error: 'Módulo não encontrado',
+        details: `Nenhum módulo encontrado com o ID: ${id}`
+      });
+    }
+
+    // Formata a resposta de forma consistente
+    res.json({
+      success: true,
+      data: {
+        ...modulo,
+        video: modulo.video || null,
+        apostila: modulo.apostila || null,
+        avaliacao: modulo.avaliacao || null
+      }
+    });
+
+  } catch (error) {
+    console.error('Erro no servidor:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Erro interno no servidor',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
+  }
+});
+
+app.get('/api/usuarios', async (req, res) => {
+  try {
+    const query = req.query.query?.toLowerCase();
+
+    if (!query) {
+      return res.status(400).json({ error: 'Parâmetro "query" é obrigatório' });
+    }
+
+    const usuarios = await prisma.usuario.findMany({
+      where: {
+        OR: [
+          { nome: { contains: query } },
+      { email: { contains: query } }
+    ]
+  }
+});
+    res.json(usuarios);
+  } catch (error) {
+    console.error('Erro ao buscar usuário:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+});
+
+/*app.put('/api/usuarios/:id', async (req, res) => {
+  const id = Number(req.params.id);
+  const { nome, sobrenome, email, cpf, tipo } = req.body;
+
+  try {
+    // Atualiza o usuário no banco
+    const usuarioAtualizado = await prisma.usuario.update({
+      where: { id },
+      data: { nome, sobrenome, email, cpf, tipo }
+    });
+
+    return res.json(usuarioAtualizado);
+  } catch (erro) {
+    console.error('Erro ao atualizar usuário:', erro);
+    return res.status(500).json({ error: 'Erro ao atualizar usuário' });
+  }
+});*/
+
+app.put('/api/usuarios/:id', async (req, res) => {
+    const { id } = req.params;
+    const { nome, sobrenome, email, cpf, tipo } = req.body;
+
+    const nomeCompleto = `${nome} ${sobrenome}`;
+
+    try {
+        const usuarioAtualizado = await prisma.usuario.update({
+            where: { id: Number(id) },
+            data: {
+                nome: nomeCompleto,
+                email,
+                cpf,
+                tipo,
+            },
+        });
+
+        res.json(usuarioAtualizado);
+    } catch (error) {
+        console.error('Erro ao atualizar usuário:', error);
+        res.status(500).json({ error: 'Erro ao atualizar usuário.' });
+    }
 });
 
 
