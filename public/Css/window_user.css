@@ -87,7 +87,6 @@ body {
 .organizacao-geral {
     display: flex;
     min-height: 100vh;
-    padding-top: 60px;
 }
 
 /* Side menu */
